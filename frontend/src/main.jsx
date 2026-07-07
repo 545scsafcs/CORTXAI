@@ -1,0 +1,27 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+
+import "./index.css";
+import App from "./App";
+
+import { NoraProvider } from "./context/NoraContext";
+import { AgentProvider } from "./context/AgentContext";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+
+      <AgentProvider>
+
+        <NoraProvider>
+
+          <App />
+
+        </NoraProvider>
+
+      </AgentProvider>
+
+    </BrowserRouter>
+  </React.StrictMode>
+);
