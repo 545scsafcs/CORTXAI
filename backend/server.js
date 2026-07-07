@@ -11,9 +11,9 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "https://cortxai.vercel.app",
-    ],
+  "http://localhost:5173",
+  "https://cortxai-eight.vercel.app",
+],
     credentials: true,
   })
 );
