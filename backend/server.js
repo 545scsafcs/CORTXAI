@@ -8,20 +8,36 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://cortxai.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "CORTXAI Backend Running 🚀",
+  });
+});
+
 app.use("/api/nora", noraRoutes);
 
-app.get("/", (req, res) => {
-  res.json({
-    status: "CORTXAI Backend Running 🚀",
+app.use("*", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route Not Found",
   });
 });
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

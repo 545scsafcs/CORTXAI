@@ -1,6 +1,6 @@
 export async function askGemini(message, agent) {
   try {
-    const res = await fetch("http://localhost:5000/api/nora/chat", {
+    const res = await fetch("https://cortxai-backend.onrender.com/api/nora/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
