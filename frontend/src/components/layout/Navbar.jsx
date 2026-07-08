@@ -14,18 +14,18 @@ export default function Navbar() {
 
           <nav className="hidden md:flex gap-8 text-gray-300">
 
-            <a href="#">Features</a>
+              <a href="#features">Features</a>
 
-            <a href="#">Solutions</a>
+              <a href="#solutions">Solutions</a>
 
-            <a href="#">Pricing</a>
+              <a href="#pricing">Pricing</a>
 
-            <a href="#">About</a>
+              <a href="#about">About</a>
 
           </nav>
 
-          <Button>
-            Get Started
+          <Button to="/login">
+           Get Started  
           </Button>
 
         </div>

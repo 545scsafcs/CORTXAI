@@ -1,11 +1,16 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Button({
   children,
   variant = "primary",
   className = "",
+  to,
+  onClick,
   ...props
 }) {
+  const navigate = useNavigate();
+
   const base =
     "px-6 py-3 rounded-xl font-medium transition-all duration-300";
 
@@ -13,17 +18,25 @@ export default function Button({
     primary:
       "bg-primary text-black hover:scale-105 hover:shadow-[0_0_30px_rgba(6,230,255,.5)]",
 
-    secondary:
-      "glass text-white",
+    secondary: "glass text-white",
 
     outline:
       "border border-white/20 text-white hover:border-primary hover:text-primary",
   };
 
+  function handleClick(e) {
+    if (onClick) onClick(e);
+
+    if (to) {
+      navigate(to);
+    }
+  }
+
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.96 }}
+      onClick={handleClick}
       className={`${base} ${styles[variant]} ${className}`}
       {...props}
     >
