@@ -19,6 +19,11 @@ import SalaryPage from "../pages/Employee/SalaryPage";
 import ProfilePage from "../pages/Employee/ProfilePage";
 
 import AdminDashboard from "../pages/Admin/AdminDashboard";
+import EmployeesPage from "../pages/Admin/EmployeesPage";
+import DepartmentsPage from "../pages/Admin/DepartmentsPage";
+import ReportsPage from "../pages/Admin/ReportsPage";
+import AgentsPage from "../pages/Admin/AgentsPage";
+import AdminSettingsPage from "../pages/Admin/AdminSettingsPage";
 
 export default function AppRouter() {
   return (
@@ -46,9 +51,17 @@ export default function AppRouter() {
       <Route path="/employee/leave" element={<LeavePage />} />
       <Route path="/employee/salary" element={<SalaryPage />} />
       <Route path="/employee/profile" element={<ProfilePage />} />
+      <Route path="/admin" element={<AdminDashboard />} />
+
 
       {/* Admin */}
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/admin" element={<AdminDashboard />} />
+    <Route path="/admin/employees" element={<EmployeesPage />} />
+    <Route path="/admin/departments" element={<DepartmentsPage />} />
+    <Route path="/admin/reports" element={<ReportsPage />} />
+    <Route path="/admin/agents" element={<AgentsPage />} />
+    <Route path="/admin/settings" element={<AdminSettingsPage />} />
 
     </Routes>
   );
