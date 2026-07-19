@@ -1,4 +1,4 @@
-import { stopWakeWord } from "./wakeWord";
+import { startWakeWord, stopWakeWord } from "./wakeWord";
 
 export function speak(text) {
 

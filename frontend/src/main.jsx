@@ -7,6 +7,7 @@ import App from "./App";
 
 import { NoraProvider } from "./context/NoraContext";
 import { AgentProvider } from "./context/AgentContext";
+import { EmployeeProvider } from "./context/EmployeeContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -14,11 +15,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
       <AgentProvider>
 
-        <NoraProvider>
+        <EmployeeProvider>
 
-          <App />
+          <NoraProvider>
 
-        </NoraProvider>
+            <App />
+
+          </NoraProvider>
+
+        </EmployeeProvider>
 
       </AgentProvider>
 
