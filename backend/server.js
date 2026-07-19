@@ -9,6 +9,7 @@ import noraRoutes from "./routes/nora.js";
 import employeeRoutes from "./routes/hr/employeeRoutes.js";
 import attendanceRoutes from "./routes/attendance/attendanceRoutes.js";
 import leaveRoutes from "./routes/leave/leaveRoutes.js";
+import queryRoutes from "./routes/hr/queryRoutes.js";
 
 dotenv.config();
 
@@ -76,6 +77,15 @@ app.use(
 app.use(
   "/api/hr/leave",
   leaveRoutes
+);
+
+/* ============================
+      HR Query Routes
+============================ */
+
+app.use(
+  "/api/hr/queries",
+  queryRoutes
 );
 
 /* ============================

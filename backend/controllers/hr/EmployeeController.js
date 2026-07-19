@@ -164,6 +164,54 @@ class EmployeeController {
   }
 
   /* ===========================
+        DASHBOARD STATS
+  =========================== */
+
+  /* ===========================
+            HR LOGIN
+  =========================== */
+
+  async hrLogin(req, res) {
+    try {
+      const { email, employeeId } = req.body;
+
+      if (!email || !employeeId) {
+        return res.status(400).json({
+          success: false,
+          message: "Email and Employee ID are required",
+        });
+      }
+
+      const result = await EmployeeService.hrLogin(email, employeeId);
+
+      if (!result.success) {
+        return res.status(401).json({
+          success: false,
+          message: result.message,
+        });
+      }
+
+      // Record login activity (non-blocking)
+      const userAgent = req.headers["user-agent"] || "";
+      const ip = req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "";
+      EmployeeService.recordLoginActivity(result.data._id, userAgent, ip).catch((err) =>
+        console.error("Failed to record login activity:", err.message)
+      );
+
+      res.json({
+        success: true,
+        message: "HR Login successful",
+        data: result.data,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+  /* ===========================
        DASHBOARD STATS
   =========================== */
 

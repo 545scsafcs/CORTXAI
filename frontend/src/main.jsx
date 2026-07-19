@@ -8,6 +8,7 @@ import App from "./App";
 import { NoraProvider } from "./context/NoraContext";
 import { AgentProvider } from "./context/AgentContext";
 import { EmployeeProvider } from "./context/EmployeeContext";
+import { SidebarProvider } from "./context/SidebarContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
           <NoraProvider>
 
-            <App />
+            <SidebarProvider>
+              <App />
+            </SidebarProvider>
 
           </NoraProvider>
 

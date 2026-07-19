@@ -51,6 +51,33 @@ class EmployeeService {
     return employee;
   }
 
+  /* ===========================
+           HR Login
+  ============================ */
+
+  async hrLogin(email, employeeId) {
+    const employee = await EmployeeRepository.login(email, employeeId);
+
+    if (!employee) {
+      return { success: false, message: "Invalid Email or Employee ID" };
+    }
+
+    // Check if the employee has an HR designation
+    const designation = (employee.designation || "").toLowerCase();
+    const isHR =
+      designation.includes("hr") ||
+      designation.includes("human resource");
+
+    if (!isHR) {
+      return {
+        success: false,
+        message: "You are not authorized as HR. Only employees with HR designation can access the HR portal.",
+      };
+    }
+
+    return { success: true, data: employee };
+  }
+
   async getDashboardStats() {
     return await EmployeeRepository.getDashboardStats();
   }

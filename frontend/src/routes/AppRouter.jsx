@@ -52,6 +52,7 @@ import HRPerformancePage from "../pages/HR/PerformancePage";
 import HRReportsPage from "../pages/HR/ReportsPage";
 import HRSettingsPage from "../pages/HR/SettingsPage";
 import HRAgentPage from "../pages/HR/HRAgentPage";
+import HRQueriesPage from "../pages/HR/QueriesPage";
 
 // Admin Portal
 import AdminDashboard from "../pages/Admin/AdminDashboard";
@@ -217,6 +218,14 @@ export default function AppRouter() {
         element={
           <RoleProtectedRoute role="hr">
             <HRPayrollPage />
+          </RoleProtectedRoute>
+        }
+      />
+      <Route
+        path="/hr/queries"
+        element={
+          <RoleProtectedRoute role="hr">
+            <HRQueriesPage />
           </RoleProtectedRoute>
         }
       />

@@ -16,6 +16,24 @@ export default function FloatingNora() {
     setOpen(false);
   }, [location, setOpen]);
 
+  // Click outside listener
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        // Check if user clicked the floating trigger button
+        const trigger = document.getElementById("nora-trigger");
+        if (trigger && trigger.contains(event.target)) return;
+        setOpen(false);
+      }
+    }
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open, setOpen]);
+
   // Listen for Escape key
   useEffect(() => {
     function handleKeyDown(e) {
@@ -57,6 +75,7 @@ export default function FloatingNora() {
       <AnimatePresence>
         {!open && (
           <motion.button
+            id="nora-trigger"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}

@@ -11,6 +11,13 @@ router.post(
   EmployeeController.login
 );
 
+/* HR Login (designation-validated) */
+
+router.post(
+  "/employees/hr-login",
+  EmployeeController.hrLogin
+);
+
 /* CRUD */
 
 router.get(

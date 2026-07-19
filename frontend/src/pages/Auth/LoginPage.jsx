@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { employeeLogin } from "../../services/employeeApi";
+import { employeeLogin, hrLogin } from "../../services/employeeApi";
 import { useEmployee } from "../../context/EmployeeContext";
 import { Shield, Mail, Key, User, ArrowRight } from "lucide-react";
 
@@ -28,14 +28,25 @@ export default function LoginPage() {
       return;
     }
 
-    if (
-      role === "hr" &&
-      email === "hr@cortxai.com" &&
-      password === "HR@123"
-    ) {
-      localStorage.setItem("userRole", "hr");
-      navigate("/hr");
-      return;
+    if (role === "hr") {
+      try {
+        const response = await hrLogin(email, password);
+        if (!response || !response.success) {
+          alert(response?.message || "HR Authentication Failed");
+          return;
+        }
+        localStorage.setItem("userRole", "hr");
+        setEmployee(response.data);
+        navigate("/hr");
+        return;
+      } catch (err) {
+        alert(
+          err?.response?.data?.message ||
+          err.message ||
+          "HR Login Failed"
+        );
+        return;
+      }
     }
 
     if (role === "employee") {
@@ -178,8 +189,8 @@ export default function LoginPage() {
             </div>
             <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl">
               <p className="font-bold text-white mb-1">👥 HR Manager</p>
-              <p className="font-mono">hr@cortxai.com</p>
-              <p className="font-mono">HR@123</p>
+              <p className="font-mono">HR MAIL ID</p>
+              <p className="font-mono">HR EMPLOYEE ID</p>
             </div>
             <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl">
               <p className="font-bold text-white mb-1">🛡 System Admin</p>

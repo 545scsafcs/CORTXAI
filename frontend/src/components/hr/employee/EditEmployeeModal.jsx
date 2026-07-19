@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
 export default function EditEmployeeModal({ open, employee, loading, onClose, onUpdate }) {
@@ -12,6 +12,8 @@ export default function EditEmployeeModal({ open, employee, loading, onClose, on
     salary: "",
     status: "Active",
   });
+
+  const modalRef = useRef(null);
 
   useEffect(() => {
     if (employee) {
@@ -27,6 +29,21 @@ export default function EditEmployeeModal({ open, employee, loading, onClose, on
       });
     }
   }, [employee]);
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === "Escape") onClose();
+    }
+    if (open) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+      modalRef.current?.focus();
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [open, onClose]);
 
   if (!open || !employee) return null;
 
@@ -47,12 +64,25 @@ export default function EditEmployeeModal({ open, employee, loading, onClose, on
     }
   }
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="w-full max-w-2xl bg-[#08111f] border border-white/10 rounded-3xl p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div
+      onClick={handleOverlayClick}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+    >
+      <div
+        ref={modalRef}
+        tabIndex={-1}
+        className="w-full max-w-2xl bg-[#08111f] border border-white/10 rounded-3xl p-8 max-h-[90vh] overflow-y-auto shadow-2xl outline-none focus:outline-none"
+      >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold text-white">Edit Employee Details</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition">
+          <h2 className="text-3xl font-bold text-white font-outfit">Edit Employee Details</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-white transition cursor-pointer">
             <X size={24} />
           </button>
         </div>

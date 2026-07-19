@@ -82,6 +82,19 @@ export const loginEmployee = async (email, employeeId) => {
 };
 
 /* ==========================
+         HR Login
+========================== */
+
+export const hrLogin = async (email, employeeId) => {
+  const res = await API.post("/employees/hr-login", {
+    email,
+    employeeId,
+  });
+  // Backend returns: { success: true, message: "...", data: employee }
+  return res.data;
+};
+
+/* ==========================
     Profile Management
 ========================== */
 

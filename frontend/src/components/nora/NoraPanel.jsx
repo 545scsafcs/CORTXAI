@@ -12,12 +12,14 @@ import { askGemini } from "../../services/gemini";
 import { speak } from "../../services/speak";
 
 import { useAgent } from "../../context/AgentContext";
+import { useNora } from "../../context/NoraContext";
 
 export default function NoraPanel() {
 
   const navigate = useNavigate();
 
   const { agent } = useAgent();
+  const { setOpen } = useNora();
 
   const [listening, setListening] = useState(false);
 
@@ -68,42 +70,49 @@ export default function NoraPanel() {
     if (command.includes("dashboard")) {
       speak("Opening Dashboard");
       navigate("/dashboard");
+      setOpen(false);
       return true;
     }
 
     if (command.includes("hr")) {
       speak("Opening Human Resources");
       navigate("/dashboard/hr");
+      setOpen(false);
       return true;
     }
 
     if (command.includes("inventory")) {
       speak("Opening Inventory");
       navigate("/dashboard/inventory");
+      setOpen(false);
       return true;
     }
 
     if (command.includes("finance")) {
       speak("Opening Finance");
       navigate("/dashboard/finance");
+      setOpen(false);
       return true;
     }
 
     if (command.includes("analytics")) {
       speak("Opening Analytics");
       navigate("/dashboard/analytics");
+      setOpen(false);
       return true;
     }
 
     if (command.includes("agent")) {
       speak("Opening AI Agents");
       navigate("/dashboard/agents");
+      setOpen(false);
       return true;
     }
 
     if (command.includes("settings")) {
       speak("Opening Settings");
       navigate("/dashboard/settings");
+      setOpen(false);
       return true;
     }
 
