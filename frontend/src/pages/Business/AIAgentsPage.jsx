@@ -1,138 +1,31 @@
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import NoraPanel from "../../components/nora/NoraPanel";
+import React from "react";
+import UnifiedLayout from "../../components/layout/UnifiedLayout";
+import PageHeader from "../../components/ui/PageHeader";
+import AIAgentsRedesign from "../../components/LandingSections/AIAgentsRedesign";
+import Button from "../../components/ui/Button";
+import { Bot, Sparkles, Plus } from "lucide-react";
 
-import { useAgent } from "../../context/AgentContext";
+export default function AIAgentsPage() {
+  return (
+    <UnifiedLayout>
+      <div className="space-y-8 font-sans">
+        <PageHeader
+          title="Autonomous AI Workforce Guild"
+          subtitle="Deploy, configure, and monitor department-specific Nora AI Agents."
+          badge="AI Agents"
+          badgeColor="from-cyan-400 to-indigo-600"
+          breadcrumbs={[{ label: "Business Suite" }, { label: "AI Agents" }]}
+          actions={
+            <Button variant="primary" className="bg-cyan-400 text-black hover:bg-cyan-300 font-bold text-xs">
+              <Plus size={15} className="inline mr-1.5" /> Deploy Custom Agent
+            </Button>
+          }
+        />
 
-const agents = [
-
-{
-title:"Nora AI",
-id:"nora"
-},
-
-{
-title:"HR Agent",
-id:"hr"
-},
-
-{
-title:"Finance Agent",
-id:"finance"
-},
-
-{
-title:"Inventory Agent",
-id:"inventory"
-},
-
-{
-title:"CRM Agent",
-id:"crm"
-},
-
-{
-title:"Sales Agent",
-id:"sales"
-}
-
-];
-
-export default function AIAgentsPage(){
-
-const {agent,setAgent}=useAgent();
-
-return(
-
-<DashboardLayout>
-
-<div className="space-y-10">
-
-<h1 className="text-5xl font-black">
-
-AI Agents
-
-</h1>
-
-<div className="grid lg:grid-cols-3 gap-6">
-
-{
-
-agents.map((item)=>(
-
-<div
-
-key={item.id}
-
-className={`rounded-3xl
-p-8
-border
-
-${
-agent.id===item.id
-?
-
-"border-cyan-400"
-
-:
-
-"border-white/10"
-
-}
-
-bg-white/5`}
-
->
-
-<div className="text-5xl">
-
-🤖
-
-</div>
-
-<h2 className="text-2xl mt-5">
-
-{item.title}
-
-</h2>
-
-<button
-
-onClick={()=>setAgent(item)}
-
-className="mt-6 bg-cyan-400 text-black px-6 py-3 rounded-xl"
-
->
-
-{
-
-agent.id===item.id
-
-?
-
-"Selected"
-
-:
-
-"Activate"
-
-}
-
-</button>
-
-</div>
-
-))
-
-}
-
-</div>
-
-<NoraPanel/>
-
-</div>
-
-</DashboardLayout>
-
-)
-
+        <div className="rounded-3xl bg-white border border-slate-200/80 p-6 md:p-8 shadow-xl shadow-slate-200/40">
+          <AIAgentsRedesign />
+        </div>
+      </div>
+    </UnifiedLayout>
+  );
 }

@@ -8,75 +8,65 @@ const data = [
   { name: "Sales", value: 30 },
 ];
 
-const colors = [
-  "#06b6d4",
-  "#3b82f6",
-  "#8b5cf6",
-  "#14b8a6",
-];
+const colors = ["#4f46e5", "#0284c7", "#059669", "#d97706"];
 
 export default function ExpenseChart() {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-xl relative overflow-hidden group">
+    <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/40 relative overflow-hidden font-sans">
       <div className="flex justify-between items-start mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-white font-outfit">
-            Expense Distribution
+          <h2 className="text-xl font-bold text-slate-900 font-outfit">
+            Expense Allocation Share
           </h2>
-          <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1.5 font-outfit">
-            Department Budget Share
+          <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1 font-outfit">
+            Departmental Budget Distribution
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6">
-        <div className="h-[250px] relative">
+        <div className="h-[230px] relative">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(10, 15, 30, 0.85)",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #e2e8f0",
                   borderRadius: "16px",
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                  backdropFilter: "blur(12px)",
+                  boxShadow: "0 10px 25px rgba(15,23,42,0.08)",
                 }}
-                labelClassName="text-white font-bold font-outfit text-xs"
-                itemStyle={{ color: "#22d3ee", fontFamily: "monospace", fontSize: "11px" }}
+                labelClassName="text-slate-900 font-bold font-outfit text-xs"
+                itemStyle={{ fontSize: "11px", fontWeight: "bold" }}
               />
               <Pie
                 data={data}
                 dataKey="value"
-                innerRadius={65}
-                outerRadius={85}
+                innerRadius={60}
+                outerRadius={80}
                 paddingAngle={4}
                 cornerRadius={6}
               >
                 {data.map((entry, index) => (
-                  <Cell
-                    key={index}
-                    fill={colors[index % colors.length]}
-                    className="outline-none focus:outline-none"
-                  />
+                  <Cell key={index} fill={colors[index % colors.length]} />
                 ))}
               </Pie>
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-3xl font-black text-white font-outfit tracking-tight">100%</span>
-            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Allocated</span>
+            <span className="text-2xl font-black text-slate-900 font-outfit">100%</span>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Allocated</span>
           </div>
         </div>
 
         {/* Legend */}
-        <div className="space-y-3.5 pl-4 md:border-l border-white/5">
+        <div className="space-y-3 pl-4 md:border-l border-slate-100">
           {data.map((entry, index) => (
             <div key={entry.name} className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <span className="w-3 h-3 rounded-full shadow-md" style={{ backgroundColor: colors[index % colors.length] }} />
-                <span className="text-sm font-semibold text-gray-300 font-outfit">{entry.name}</span>
+                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[index % colors.length] }} />
+                <span className="text-xs font-bold text-slate-900 font-outfit">{entry.name}</span>
               </div>
-              <span className="text-sm font-bold text-white font-mono">{entry.value}%</span>
+              <span className="text-xs font-bold text-slate-900 font-mono">{entry.value}%</span>
             </div>
           ))}
         </div>

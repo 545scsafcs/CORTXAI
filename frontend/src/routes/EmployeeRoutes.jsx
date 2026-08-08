@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import EmployeeLogin from "../pages/Employee/EmployeeLogin";
+import WorkspaceLoginPage from "../pages/Auth/WorkspaceLoginPage";
 import EmployeeDashboard from "../pages/Employee/EmployeeDashboard";
 import AttendancePage from "../pages/Employee/AttendancePage";
 import LeavePage from "../pages/Employee/LeavePage";
@@ -14,7 +14,7 @@ function ProtectedRoute({ children }) {
   const { employee } = useEmployee();
 
   if (!employee) {
-    return <Navigate to="/employee/login" replace />;
+    return <Navigate to="/login/employee" replace />;
   }
 
   return children;
@@ -26,7 +26,7 @@ export default function EmployeeRoutes() {
 
       <Route
         path="/login"
-        element={<EmployeeLogin />}
+        element={<WorkspaceLoginPage type="employee" />}
       />
 
       <Route

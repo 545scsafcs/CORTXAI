@@ -2,34 +2,34 @@ import React from "react";
 import { Bell } from "lucide-react";
 
 const notifications = [
-  "Payroll generated successfully",
-  "New Lead assigned",
-  "Warehouse stock updated",
-  "Nora completed AI analysis",
+  "Payroll generated successfully for March",
+  "New Enterprise Lead assigned to CRM pipeline",
+  "Warehouse A stock levels updated",
+  "Nora AI completed autonomous ledger analysis",
 ];
 
 export default function Notifications() {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-xl">
+    <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/40 font-sans">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-cyan-500/10 rounded-xl border border-cyan-500/10 text-cyan-400">
-          <Bell size={20} className="animate-swing" />
+        <div className="p-2 bg-indigo-50 rounded-xl border border-slate-200 text-indigo-600">
+          <Bell size={20} />
         </div>
-        <h2 className="text-2xl font-bold text-white font-outfit">
-          Notifications
+        <h2 className="text-xl font-bold text-slate-900 font-outfit">
+          Notifications Stream
         </h2>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {notifications.map((item, index) => (
           <div
             key={index}
-            className="border-b border-white/5 last:border-b-0 pb-4 last:pb-0 hover:bg-white/[0.01] px-4 py-2 rounded-xl transition-all duration-300"
+            className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100 transition duration-200"
           >
-            <p className="text-sm font-semibold text-gray-250 font-outfit leading-snug">
+            <p className="text-xs font-bold text-slate-900 font-outfit leading-snug">
               {item}
             </p>
-            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mt-2">
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mt-1.5 font-mono">
               Just now
             </span>
           </div>

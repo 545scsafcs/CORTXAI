@@ -1,182 +1,51 @@
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import {
-Users,
-UserPlus,
-CalendarCheck,
-Wallet
-} from "lucide-react";
+import React from "react";
+import UnifiedLayout from "../../components/layout/UnifiedLayout";
+import PageHeader from "../../components/ui/PageHeader";
+import KPICard from "../../components/ui/KPICard";
+import DataTable from "../../components/ui/DataTable";
+import Button from "../../components/ui/Button";
+import { Users, UserPlus, CalendarCheck, Wallet, Building2 } from "lucide-react";
 
-const employees=[
-{
-name:"Rahul Sharma",
-role:"Developer",
-status:"Present"
-},
-{
-name:"Priya Singh",
-role:"HR",
-status:"Leave"
-},
-{
-name:"Aman Verma",
-role:"Sales",
-status:"Present"
-},
-{
-name:"Neha Gupta",
-role:"Finance",
-status:"Present"
-}
+const employees = [
+  { name: "Rahul Sharma", role: "Fullstack Developer", dept: "Engineering", status: "Present" },
+  { name: "Priya Singh", role: "HR Operations Lead", dept: "Human Resources", status: "On Leave" },
+  { name: "Aman Verma", role: "Sales Account Exec", dept: "Sales", status: "Present" },
+  { name: "Neha Gupta", role: "Financial Auditor", dept: "Finance", status: "Present" },
+  { name: "Vikram Malhotra", role: "Product Designer", dept: "Design", status: "Present" },
 ];
 
-export default function HRPage(){
-
-return(
-
-<DashboardLayout>
-
-<div className="space-y-8">
-
-<div className="flex justify-between items-center">
-
-<div>
-
-<h1 className="text-5xl font-black">
-
-HR Management
-
-</h1>
-
-<p className="text-gray-400 mt-2">
-
-Manage employees and payroll.
-
-</p>
-
-</div>
-
-<button className="bg-cyan-400 text-black px-6 py-3 rounded-xl flex gap-2">
-
-<UserPlus size={20}/>
-
-Add Employee
-
-</button>
-
-</div>
-
-<div className="grid lg:grid-cols-4 gap-6">
-
-<Card title="Employees" value="126" icon={<Users/>}/>
-
-<Card title="Present" value="118" icon={<CalendarCheck/>}/>
-
-<Card title="Payroll" value="₹18.2L" icon={<Wallet/>}/>
-
-<Card title="Departments" value="8" icon={<Users/>}/>
-
-</div>
-
-<div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-
-<h2 className="text-2xl font-bold mb-8">
-
-Employee List
-
-</h2>
-
-<table className="w-full">
-
-<thead>
-
-<tr className="text-left text-gray-400">
-
-<th>Name</th>
-
-<th>Role</th>
-
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{
-
-employees.map(emp=>(
-
-<tr key={emp.name} className="border-t border-white/10">
-
-<td className="py-5">
-
-{emp.name}
-
-</td>
-
-<td>
-
-{emp.role}
-
-</td>
-
-<td>
-
-<span className="text-cyan-400">
-
-{emp.status}
-
-</span>
-
-</td>
-
-</tr>
-
-))
-
-}
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</DashboardLayout>
-
-)
-
-}
-
-function Card({title,value,icon}){
-
-return(
-
-<div className="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-<div className="text-cyan-400">
-
-{icon}
-
-</div>
-
-<p className="text-gray-400 mt-5">
-
-{title}
-
-</p>
-
-<h2 className="text-4xl font-bold mt-3">
-
-{value}
-
-</h2>
-
-</div>
-
-)
-
+export default function HRPage() {
+  return (
+    <UnifiedLayout>
+      <div className="space-y-8 font-sans">
+        <PageHeader
+          title="HR Management Portal"
+          subtitle="Autonomous human capital coordination, payroll schedules, and personnel directories."
+          badge="HR Suite"
+          badgeColor="from-indigo-500 to-purple-600"
+          breadcrumbs={[{ label: "Business Suite" }, { label: "HR Portal" }]}
+          actions={
+            <Button variant="primary" className="bg-indigo-600 text-white hover:bg-indigo-500 font-bold text-xs">
+              <UserPlus size={15} className="inline mr-1.5" /> Add New Employee
+            </Button>
+          }
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <KPICard title="Total Roster" value={126} change="+4 this month" dept="hr" icon={Users} />
+          <KPICard title="Present Today" value={118} change="93.6% Rate" dept="hr" icon={CalendarCheck} />
+          <KPICard title="Monthly Payroll" value="INR 18.2L" change="Auto-disbursed" dept="hr" icon={Wallet} />
+          <KPICard title="Departments" value={8} change="Active" dept="hr" icon={Building2} />
+        </div>
+
+        <DataTable
+          title="Company Employee Roster"
+          subtitle="Live personnel status and department assignments."
+          columns={["Name", "Role", "Department", "Status"]}
+          data={employees}
+          searchPlaceholder="Search staff by name or department..."
+        />
+      </div>
+    </UnifiedLayout>
+  );
 }

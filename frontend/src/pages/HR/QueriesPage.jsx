@@ -105,96 +105,97 @@ export default function QueriesPage() {
 
   const getPriorityBadgeClass = (priority) => {
     switch (priority) {
-      case "Urgent": return "bg-red-500/10 text-red-400 border border-red-500/20";
-      case "High": return "bg-amber-500/10 text-amber-400 border border-amber-500/20";
-      case "Medium": return "bg-blue-500/10 text-blue-400 border border-blue-500/20";
-      default: return "bg-gray-500/10 text-gray-400 border border-gray-500/20";
+      case "Urgent": return "bg-rose-50 text-rose-800 border border-rose-200/90 font-extrabold";
+      case "High": return "bg-amber-50 text-amber-900 border border-amber-200/90 font-extrabold";
+      case "Medium": return "bg-blue-50 text-blue-900 border border-blue-200/90 font-extrabold";
+      default: return "bg-slate-100 text-slate-700 border border-slate-200 font-extrabold";
     }
   };
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
-      case "Pending": return "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20";
-      case "In Progress": return "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20";
-      case "Resolved": return "bg-green-500/10 text-green-400 border border-green-500/20";
-      default: return "bg-slate-500/10 text-slate-400 border border-slate-500/20";
+      case "Pending": return "bg-amber-50 text-amber-900 border border-amber-200/90 font-extrabold";
+      case "In Progress": return "bg-indigo-50 text-indigo-900 border border-indigo-200/90 font-extrabold";
+      case "Resolved": return "bg-emerald-50 text-emerald-800 border border-emerald-200/90 font-extrabold";
+      default: return "bg-slate-100 text-slate-700 border border-slate-200 font-extrabold";
     }
   };
 
   return (
     <HRLayout>
-      <div className="space-y-8">
+      <div className="space-y-8 font-sans">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-600" />
           <div>
-            <h1 className="text-4xl font-black tracking-tight text-white font-outfit">
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 font-outfit">
               Department Queries
             </h1>
-            <p className="text-gray-400 mt-2 text-base">
-              Manage and resolve employee tickets for the <span className="text-cyan-400 font-bold">{currentHR?.department || "HR"}</span> department.
+            <p className="text-slate-600 mt-2 text-xs sm:text-sm font-semibold leading-relaxed font-sans">
+              Manage and resolve employee tickets for the <span className="text-indigo-700 font-bold">{currentHR?.department || "HR"}</span> department.
             </p>
           </div>
           <button
             onClick={fetchData}
-            className="flex items-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white px-5 py-3 rounded-2xl transition duration-200 self-start md:self-auto cursor-pointer"
+            className="flex items-center gap-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 px-4 py-2.5 rounded-2xl text-xs font-bold transition duration-200 self-start md:self-auto cursor-pointer shadow-2xs"
           >
-            <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+            <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
             <span>Sync Queries</span>
           </button>
         </div>
 
         {/* Stats Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="rounded-3xl border border-white/5 bg-slate-950/40 p-6 flex items-center justify-between shadow-lg">
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 flex items-center justify-between shadow-sm">
             <div className="space-y-1">
-              <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Total Queries</span>
-              <h3 className="text-3xl font-black text-white font-outfit">{stats.total}</h3>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider font-outfit">Total Queries</span>
+              <h3 className="text-3xl font-black text-slate-900 font-outfit">{stats.total}</h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-500/20">
-              <MessageSquare size={22} />
+            <div className="w-11 h-11 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-700 border border-indigo-200">
+              <MessageSquare size={20} />
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/5 bg-slate-950/40 p-6 flex items-center justify-between shadow-lg">
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 flex items-center justify-between shadow-sm">
             <div className="space-y-1">
-              <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Pending Action</span>
-              <h3 className="text-3xl font-black text-yellow-400 font-outfit">{stats.pending}</h3>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider font-outfit">Pending Action</span>
+              <h3 className="text-3xl font-black text-amber-700 font-outfit">{stats.pending}</h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 border border-yellow-500/20">
-              <AlertCircle size={22} />
+            <div className="w-11 h-11 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-800 border border-amber-200">
+              <AlertCircle size={20} />
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/5 bg-slate-950/40 p-6 flex items-center justify-between shadow-lg">
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 flex items-center justify-between shadow-sm">
             <div className="space-y-1">
-              <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Resolved Tickets</span>
-              <h3 className="text-3xl font-black text-green-400 font-outfit">{stats.resolved + stats.closed}</h3>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider font-outfit">Resolved Tickets</span>
+              <h3 className="text-3xl font-black text-emerald-700 font-outfit">{stats.resolved + stats.closed}</h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-              <CheckCircle2 size={22} />
+            <div className="w-11 h-11 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-800 border border-emerald-200">
+              <CheckCircle2 size={20} />
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/5 bg-slate-950/40 p-6 flex items-center justify-between shadow-lg">
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 flex items-center justify-between shadow-sm">
             <div className="space-y-1">
-              <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Avg Resolution</span>
-              <h3 className="text-3xl font-black text-white font-outfit">
-                {stats.avgResponseHours} <span className="text-xs text-gray-400 font-medium">Hrs</span>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider font-outfit">Avg Resolution</span>
+              <h3 className="text-3xl font-black text-slate-900 font-outfit">
+                {stats.avgResponseHours} <span className="text-xs text-slate-500 font-medium">Hrs</span>
               </h3>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20">
-              <Clock size={22} />
+            <div className="w-11 h-11 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-700 border border-purple-200">
+              <Clock size={20} />
             </div>
           </div>
         </div>
 
         {/* Toolbar & Filters */}
-        <div className="rounded-3xl border border-white/5 bg-slate-950/30 p-6 space-y-4 shadow-xl">
+        <div className="rounded-3xl border border-slate-200/80 bg-white p-6 space-y-4 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
-              <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
-                <Search size={18} />
+              <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <Search size={16} />
               </span>
               <input
                 type="text"
@@ -204,12 +205,12 @@ export default function QueriesPage() {
                   setCurrentPage(1);
                 }}
                 placeholder="Search by Employee, ID, Subject..."
-                className="w-full bg-[#030712] border border-white/10 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400/50 transition-all duration-300"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-11 pr-4 py-3 text-xs text-slate-900 font-medium placeholder-slate-400 outline-none focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition"
               />
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-2 bg-slate-900/60 p-1.5 rounded-2xl border border-white/5">
+            <div className="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
               {["All", "Pending", "In Progress", "Resolved", "Closed"].map((tab) => (
                 <button
                   key={tab}
@@ -217,10 +218,10 @@ export default function QueriesPage() {
                     setStatusFilter(tab);
                     setCurrentPage(1);
                   }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition duration-150 cursor-pointer ${
                     statusFilter === tab
-                      ? "bg-cyan-400 text-black shadow-lg shadow-cyan-400/10"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                      ? "bg-[#0F172A] text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
                   }`}
                 >
                   {tab}
@@ -230,69 +231,69 @@ export default function QueriesPage() {
           </div>
 
           {/* Data Table */}
-          <div className="overflow-x-auto rounded-2xl border border-white/5">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-900/80 text-gray-400 text-[11px] uppercase tracking-wider border-b border-white/5">
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("employeeName")}>Employee</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("employeeCode")}>ID</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("department")}>Dept</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("subject")}>Subject</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("category")}>Category</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("priority")}>Priority</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("status")}>Status</th>
-                  <th className="py-4.5 px-6 font-extrabold cursor-pointer" onClick={() => handleSort("createdAt")}>Date</th>
-                  <th className="py-4.5 px-6 font-extrabold text-right">Actions</th>
+                <tr className="bg-slate-100/90 text-slate-900 text-[11px] font-black uppercase tracking-wider border-b border-slate-200">
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("employeeName")}>Employee</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("employeeCode")}>ID</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("department")}>Dept</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("subject")}>Subject</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("category")}>Category</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("priority")}>Priority</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("status")}>Status</th>
+                  <th className="py-3.5 px-5 font-outfit cursor-pointer" onClick={() => handleSort("createdAt")}>Date</th>
+                  <th className="py-3.5 px-5 font-outfit text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 text-sm text-gray-300">
+              <tbody className="divide-y divide-slate-100 text-xs text-slate-700 font-medium">
                 {loading ? (
                   <tr>
                     <td colSpan={9} className="py-16 text-center">
                       <div className="inline-flex flex-col items-center gap-3">
-                        <div className="w-8 h-8 border-3 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-                        <span className="text-gray-400 text-xs font-semibold">Loading queries...</span>
+                        <div className="w-8 h-8 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-slate-500 text-xs font-semibold">Loading queries...</span>
                       </div>
                     </td>
                   </tr>
                 ) : currentItems.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="py-16 text-center text-gray-500">
+                    <td colSpan={9} className="py-16 text-center text-slate-500">
                       <div className="flex flex-col items-center justify-center space-y-2">
-                        <MessageSquare size={36} className="text-gray-600 animate-bounce" />
-                        <p className="font-bold text-gray-400">No Queries Found</p>
-                        <p className="text-xs text-gray-600">No queries match the active filter or search keywords.</p>
+                        <MessageSquare size={32} className="text-slate-400" />
+                        <p className="font-bold text-slate-900">No Queries Found</p>
+                        <p className="text-xs text-slate-500 font-medium">No queries match the active filter or search keywords.</p>
                       </div>
                     </td>
                   </tr>
                 ) : (
                   currentItems.map((q) => (
-                    <tr key={q._id} className="hover:bg-white/[0.02] transition-colors duration-150">
-                      <td className="py-4.5 px-6 font-bold text-white">{q.employeeName}</td>
-                      <td className="py-4.5 px-6 font-mono text-xs">{q.employeeCode}</td>
-                      <td className="py-4.5 px-6">{q.department}</td>
-                      <td className="py-4.5 px-6 max-w-xs truncate font-medium">{q.subject}</td>
-                      <td className="py-4.5 px-6">{q.category}</td>
-                      <td className="py-4.5 px-6">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${getPriorityBadgeClass(q.priority)}`}>
+                    <tr key={q._id} className="hover:bg-slate-50/80 transition-colors duration-150">
+                      <td className="py-3.5 px-5 font-bold text-slate-900 font-outfit">{q.employeeName}</td>
+                      <td className="py-3.5 px-5 font-mono text-indigo-700 font-bold text-xs">{q.employeeCode}</td>
+                      <td className="py-3.5 px-5">{q.department}</td>
+                      <td className="py-3.5 px-5 max-w-xs truncate font-medium text-slate-800">{q.subject}</td>
+                      <td className="py-3.5 px-5">{q.category}</td>
+                      <td className="py-3.5 px-5">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider ${getPriorityBadgeClass(q.priority)}`}>
                           {q.priority}
                         </span>
                       </td>
-                      <td className="py-4.5 px-6">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${getStatusBadgeClass(q.status)}`}>
+                      <td className="py-3.5 px-5">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider ${getStatusBadgeClass(q.status)}`}>
                           {q.status}
                         </span>
                       </td>
-                      <td className="py-4.5 px-6 text-xs text-gray-400">
+                      <td className="py-3.5 px-5 text-xs font-mono text-slate-500">
                         {new Date(q.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="py-4.5 px-6 text-right">
+                      <td className="py-3.5 px-5 text-right">
                         <button
                           onClick={() => {
                             setSelectedQueryId(q._id);
                             setIsDetailOpen(true);
                           }}
-                          className="inline-flex items-center gap-1.5 bg-cyan-400/10 hover:bg-cyan-400 hover:text-black border border-cyan-400/20 text-cyan-400 px-3.5 py-1.5 rounded-xl text-xs font-bold transition duration-200 cursor-pointer"
+                          className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold transition duration-150 cursor-pointer"
                         >
                           <Eye size={13} />
                           <span>View Thread</span>
@@ -307,22 +308,22 @@ export default function QueriesPage() {
 
           {/* Pagination Controls */}
           {!loading && totalPages > 1 && (
-            <div className="flex items-center justify-between pt-4 border-t border-white/5">
-              <span className="text-xs text-gray-500">
+            <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+              <span className="text-xs text-slate-500 font-medium">
                 Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, sortedQueries.length)} of {sortedQueries.length} entries
               </span>
               <div className="flex gap-2">
                 <button
                   disabled={currentPage === 1}
                   onClick={() => setCurrentPage(currentPage - 1)}
-                  className="px-3.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-gray-400 hover:text-white disabled:opacity-40 disabled:hover:text-gray-400 transition cursor-pointer"
+                  className="px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition cursor-pointer"
                 >
                   Prev
                 </button>
                 <button
                   disabled={currentPage === totalPages}
                   onClick={() => setCurrentPage(currentPage + 1)}
-                  className="px-3.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-gray-400 hover:text-white disabled:opacity-40 disabled:hover:text-gray-400 transition cursor-pointer"
+                  className="px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition cursor-pointer"
                 >
                   Next
                 </button>

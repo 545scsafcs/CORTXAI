@@ -2,10 +2,10 @@ import React from "react";
 import { TrendingUp, ShoppingBag, CheckCircle, Cpu } from "lucide-react";
 
 const getIcon = (title) => {
-  if (title.includes("Revenue")) return <TrendingUp size={20} className="text-cyan-400" />;
-  if (title.includes("Orders")) return <ShoppingBag size={20} className="text-purple-400" />;
-  if (title.includes("Attendance")) return <CheckCircle size={20} className="text-green-400" />;
-  return <Cpu size={20} className="text-blue-400" />;
+  if (title.includes("Revenue")) return <TrendingUp size={20} className="text-cyan-600" />;
+  if (title.includes("Orders")) return <ShoppingBag size={20} className="text-indigo-600" />;
+  if (title.includes("Attendance")) return <CheckCircle size={20} className="text-emerald-600" />;
+  return <Cpu size={20} className="text-slate-700" />;
 };
 
 const data = [
@@ -17,25 +17,22 @@ const data = [
 
 export default function OverviewCards() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-sans">
       {data.map(([title, value]) => (
         <div
           key={title}
-          className="rounded-3xl bg-white/[0.02] border border-white/10 p-6 backdrop-blur-xl shadow-xl hover:-translate-y-1.5 transition-all duration-300 group hover:border-cyan-500/30 hover:shadow-[0_15px_40px_rgba(6,182,212,0.06)] relative overflow-hidden"
+          className="rounded-3xl bg-white border border-slate-200/80 p-6 shadow-xl shadow-slate-200/40 hover:-translate-y-1 transition-all duration-300 group hover:border-slate-300 relative overflow-hidden"
         >
-          {/* Accent radial glow overlay */}
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500" />
-          
           <div className="flex justify-between items-start">
-            <p className="text-gray-400 text-sm font-semibold uppercase tracking-wider font-outfit">
+            <p className="text-slate-500 text-xs font-bold uppercase tracking-wider font-outfit">
               {title}
             </p>
-            <div className="p-2.5 bg-white/5 rounded-xl border border-white/5 shadow-inner">
+            <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
               {getIcon(title)}
             </div>
           </div>
           
-          <h2 className="text-4xl font-black mt-4 text-white font-outfit tracking-tight">
+          <h2 className="text-3xl font-black mt-4 text-slate-900 font-outfit tracking-tight">
             {value}
           </h2>
         </div>

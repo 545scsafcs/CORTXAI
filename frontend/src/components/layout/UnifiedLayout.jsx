@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSidebar } from "../../context/SidebarContext";
 import { useEmployee } from "../../context/EmployeeContext";
-import { useNora } from "../../context/NoraContext";
 import FloatingNora from "../nora/FloatingNora";
 import TopNavbar from "./TopNavbar";
 import {
@@ -31,14 +31,15 @@ export default function UnifiedLayout({ children }) {
   const { isCollapsed, isMobileOpen, setIsMobileOpen } = useSidebar();
   const { logoutEmployee, employee } = useEmployee();
 
-  // Detect section by path prefix
   const path = location.pathname;
-  let section = "business"; // fallback
+  let section = "business";
   if (path.startsWith("/admin")) section = "admin";
   else if (path.startsWith("/hr")) section = "hr";
   else if (path.startsWith("/employee")) section = "employee";
+  else if (path.startsWith("/crm")) section = "crm";
+  else if (path.startsWith("/inventory")) section = "inventory";
+  else if (path.startsWith("/business")) section = "business";
 
-  // Build menu mapping
   const menus = {
     admin: [
       { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
@@ -49,7 +50,7 @@ export default function UnifiedLayout({ children }) {
       { name: "Settings", path: "/admin/settings", icon: Settings },
     ],
     hr: [
-      { name: "Dashboard", path: "/hr", icon: LayoutDashboard },
+      { name: "Dashboard", path: "/hr/dashboard", icon: LayoutDashboard },
       { name: "Employees", path: "/hr/employees", icon: Users },
       { name: "Attendance", path: "/hr/attendance", icon: CalendarDays },
       { name: "Leave", path: "/hr/leave", icon: Briefcase },
@@ -62,57 +63,62 @@ export default function UnifiedLayout({ children }) {
       { name: "Settings", path: "/hr/settings", icon: Settings },
     ],
     employee: [
-      { name: "Dashboard", path: "/employee", icon: LayoutDashboard },
+      { name: "Dashboard", path: "/employee/dashboard", icon: LayoutDashboard },
       { name: "Attendance", path: "/employee/attendance", icon: CalendarDays },
       { name: "Leave", path: "/employee/leave", icon: Briefcase },
       { name: "Salary", path: "/employee/salary", icon: Wallet },
       { name: "Profile", path: "/employee/profile", icon: User },
       { name: "Contact HR", path: "/employee/contact-hr", icon: MessageSquare },
     ],
+    crm: [
+      { name: "Dashboard", path: "/crm/dashboard", icon: LayoutDashboard },
+      { name: "Leads", path: "/crm/leads", icon: UserPlus },
+      { name: "Customers", path: "/crm/customers", icon: Users },
+      { name: "Pipeline", path: "/crm/pipeline", icon: TrendingUp },
+      { name: "Follow Ups", path: "/crm/followups", icon: CalendarDays },
+      { name: "Activities", path: "/crm/activities", icon: MessageSquare },
+      { name: "Reports", path: "/crm/reports", icon: FileText },
+      { name: "Settings", path: "/crm/settings", icon: Settings },
+    ],
+    inventory: [
+      { name: "Dashboard", path: "/inventory/dashboard", icon: LayoutDashboard },
+      { name: "Products", path: "/inventory/products", icon: Boxes },
+      { name: "Categories", path: "/inventory/categories", icon: Building2 },
+      { name: "Stock", path: "/inventory/stock", icon: TrendingUp },
+      { name: "Suppliers", path: "/inventory/suppliers", icon: Users },
+      { name: "Purchase Orders", path: "/inventory/purchase-orders", icon: Wallet },
+      { name: "Sales Orders", path: "/inventory/sales-orders", icon: FileText },
+      { name: "Stock History", path: "/inventory/stock-history", icon: CalendarDays },
+      { name: "Reports", path: "/inventory/reports", icon: FileText },
+      { name: "Settings", path: "/inventory/settings", icon: Settings },
+    ],
     business: [
-      { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-      { name: "HR Portal", path: "/dashboard/hr", icon: Users },
-      { name: "Inventory", path: "/dashboard/inventory", icon: Boxes },
-      { name: "Finance", path: "/dashboard/finance", icon: Wallet },
-      { name: "Analytics", path: "/dashboard/analytics", icon: ChartNoAxesCombined },
-      { name: "AI Agents", path: "/dashboard/agents", icon: Bot },
-      { name: "Settings", path: "/dashboard/settings", icon: Settings },
+      { name: "Dashboard", path: "/business/dashboard", icon: LayoutDashboard },
+      { name: "HR Portal", path: "/business/hr", icon: Users },
+      { name: "Inventory", path: "/business/inventory", icon: Boxes },
+      { name: "Finance", path: "/business/finance", icon: Wallet },
+      { name: "Analytics", path: "/business/analytics", icon: ChartNoAxesCombined },
+      { name: "AI Agents", path: "/business/agents", icon: Bot },
+      { name: "Settings", path: "/business/settings", icon: Settings },
     ],
   };
 
-  const menuItems = menus[section];
+  const menuItems = menus[section] || [];
 
-  // Section titles and badges
   const getSectionDetails = () => {
     switch (section) {
       case "admin":
-        return {
-          logoLetter: "A",
-          title: "CortxAI",
-          badge: "Admin Suite",
-          themeColor: "from-amber-400 to-red-500",
-        };
+        return { logoLetter: "A", title: "CortxAI", badge: "Admin Suite", themeColor: "bg-red-600 text-white", activeText: "text-red-900", activeBg: "bg-red-50/90" };
       case "hr":
-        return {
-          logoLetter: "H",
-          title: "CortxAI",
-          badge: "HR Module",
-          themeColor: "from-blue-400 to-cyan-500",
-        };
+        return { logoLetter: "H", title: "CortxAI", badge: "HR Module", themeColor: "bg-indigo-600 text-white", activeText: "text-indigo-900", activeBg: "bg-indigo-50/90" };
       case "employee":
-        return {
-          logoLetter: "E",
-          title: "CortxAI",
-          badge: "Employee Space",
-          themeColor: "from-emerald-400 to-teal-500",
-        };
+        return { logoLetter: "E", title: "CortxAI", badge: "Employee Space", themeColor: "bg-teal-600 text-white", activeText: "text-teal-900", activeBg: "bg-teal-50/90" };
+      case "crm":
+        return { logoLetter: "C", title: "CortxAI", badge: "CRM Suite", themeColor: "bg-rose-600 text-white", activeText: "text-rose-900", activeBg: "bg-rose-50/90" };
+      case "inventory":
+        return { logoLetter: "I", title: "CortxAI", badge: "Inventory Suite", themeColor: "bg-emerald-600 text-white", activeText: "text-emerald-900", activeBg: "bg-emerald-50/90" };
       default:
-        return {
-          logoLetter: "C",
-          title: "CortxAI",
-          badge: "Business Suite",
-          themeColor: "from-cyan-400 to-purple-500",
-        };
+        return { logoLetter: "B", title: "CortxAI", badge: "Business OS", themeColor: "bg-[#0F172A] text-white", activeText: "text-slate-900", activeBg: "bg-slate-100" };
     }
   };
 
@@ -120,23 +126,26 @@ export default function UnifiedLayout({ children }) {
 
   const handleLogout = () => {
     localStorage.removeItem("userRole");
-    if (logoutEmployee) {
-      logoutEmployee();
-    }
+    if (logoutEmployee) logoutEmployee();
     navigate("/login");
   };
 
-  // Check if current route matches menu item (exact or prefix)
   const isRouteActive = (itemPath) => {
-    if (itemPath === "/dashboard" || itemPath === "/hr" || itemPath === "/employee" || itemPath === "/admin") {
+    if (
+      itemPath === "/business/dashboard" ||
+      itemPath === "/hr/dashboard" ||
+      itemPath === "/employee/dashboard" ||
+      itemPath === "/crm/dashboard" ||
+      itemPath === "/inventory/dashboard" ||
+      itemPath === "/admin"
+    ) {
       return path === itemPath;
     }
     return path.startsWith(itemPath);
   };
 
-  // Inner menu lists
   const renderNavLinks = (closeMobile = false) => (
-    <nav className="flex-1 space-y-1.5 px-3 py-4 overflow-y-auto scrollbar-thin">
+    <nav className="flex-1 space-y-1.5 px-3 py-4 overflow-y-auto scrollbar-thin font-sans">
       {menuItems.map((item) => {
         const Icon = item.icon;
         const active = isRouteActive(item.path);
@@ -145,26 +154,30 @@ export default function UnifiedLayout({ children }) {
             key={item.path}
             to={item.path}
             onClick={() => closeMobile && setIsMobileOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-2xl transition-all duration-300 group relative overflow-hidden ${
-              active
-                ? "bg-white/10 text-cyan-300 border-l-4 border-cyan-400 shadow-lg shadow-cyan-500/5"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <Icon
-              size={18}
-              className={`transition-transform duration-300 group-hover:scale-110 flex-shrink-0 ${
-                active ? "text-cyan-300" : "text-gray-400 group-hover:text-white"
+            className={`flex items-center gap-3 px-4 py-3 text-xs font-bold rounded-2xl transition-all duration-200 group relative overflow-hidden ${active
+                ? `${details.activeBg} ${details.activeText} shadow-sm border border-slate-200/60 font-black`
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
               }`}
+          >
+            {active && (
+              <motion.div
+                layoutId="activeNavIndicatorLight"
+                className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-current"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <Icon
+              size={17}
+              className={`transition-transform duration-200 group-hover:scale-110 flex-shrink-0 ${active ? details.activeText : "text-slate-400 group-hover:text-slate-900"
+                }`}
             />
             {(!isCollapsed || closeMobile) && (
-              <span className="truncate transition-opacity duration-300">
+              <span className="truncate transition-opacity duration-200">
                 {item.name}
               </span>
             )}
-            {/* Tooltip on Collapsed Desktop Hover */}
             {isCollapsed && !closeMobile && (
-              <div className="absolute left-16 scale-0 group-hover:scale-100 transition-all duration-200 z-50 bg-[#0B1120] border border-white/10 text-xs text-white rounded-lg py-1.5 px-3 shadow-xl whitespace-nowrap pointer-events-none">
+              <div className="absolute left-16 scale-0 group-hover:scale-100 transition-all duration-200 z-50 bg-slate-900 text-white text-[11px] rounded-xl py-1.5 px-3 shadow-2xl whitespace-nowrap pointer-events-none font-bold">
                 {item.name}
               </div>
             )}
@@ -175,117 +188,150 @@ export default function UnifiedLayout({ children }) {
   );
 
   return (
-    <div className="min-h-screen flex bg-[#030712] text-white overflow-hidden relative">
-      {/* 1. Desktop Sidebar (≥ 1024px) */}
+    <div className="min-h-screen flex bg-[#F8F9FA] text-slate-900 overflow-hidden relative font-sans selection:bg-slate-900 selection:text-white">
+      {/* Desktop Sidebar */}
       <aside
-        className={`hidden lg:flex flex-col border-r border-white/5 bg-slate-950/60 backdrop-blur-2xl transition-all duration-300 h-screen sticky top-0 left-0 ${
-          isCollapsed ? "w-20" : "w-[260px]"
-        }`}
+        className={`hidden lg:flex flex-col border-r border-slate-200/80 bg-white/90 backdrop-blur-2xl transition-all duration-300 h-screen sticky top-0 left-0 z-40 ${isCollapsed ? "w-20" : "w-[250px]"
+          }`}
       >
-        {/* Logo and Header */}
-        <div className="flex items-center gap-3 px-5 py-6 border-b border-white/5 h-[80px] flex-shrink-0">
+        {/* Header Logo */}
+        <div className="flex items-center gap-3 px-5 py-6 border-b border-slate-100 h-[76px] flex-shrink-0">
           <div
-            className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${details.themeColor} flex items-center justify-center font-black text-black text-lg shadow-lg flex-shrink-0`}
+            className={`w-9 h-9 rounded-xl ${details.themeColor} flex items-center justify-center font-black text-lg shadow-sm flex-shrink-0 font-outfit`}
           >
             {details.logoLetter}
           </div>
           {!isCollapsed && (
             <div className="min-w-0">
-              <h2 className="text-lg font-black tracking-tight text-white leading-none font-outfit truncate">
+              <h2 className="text-base font-black tracking-tight text-slate-900 leading-none font-outfit truncate">
                 {details.title}
               </h2>
-              <span className="text-[9px] uppercase font-bold tracking-widest text-cyan-400 mt-1 block">
+              <span className={`text-[9px] uppercase font-extrabold tracking-widest ${details.activeText} mt-1 block font-mono`}>
                 {details.badge}
               </span>
             </div>
           )}
         </div>
 
-        {/* Sidebar Nav Links */}
+        {/* Employee Profile Card */}
+        {section === "employee" && !isCollapsed && (
+          <div className="px-5 py-4 border-b border-slate-100 flex flex-col items-center text-center space-y-2 flex-shrink-0 font-sans">
+            {employee?.profilePhoto ? (
+              <img src={employee.profilePhoto} alt={employee?.name} className="w-14 h-14 rounded-full object-cover border border-slate-200 shadow-sm" />
+            ) : (
+              <div className="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center font-bold text-white text-xl shadow-sm font-outfit">
+                {employee?.name ? employee.name[0].toUpperCase() : "E"}
+              </div>
+            )}
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 font-outfit leading-none">{employee?.name || "Employee"}</h4>
+              <p className="text-[9px] text-slate-500 font-mono mt-1 uppercase tracking-wider">{employee?.employeeId || "EMP001"}</p>
+            </div>
+            <div className="text-[10px] text-slate-600 font-semibold leading-tight">
+              <p>{employee?.designation || "Intern"}</p>
+              <p className="text-slate-400 text-[8px] uppercase font-black">{employee?.department || "Logistics"}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Links */}
         {renderNavLinks(false)}
 
-        {/* Fixed Logout bottom section */}
-        <div className="p-4 border-t border-white/5 flex-shrink-0">
+        {/* Logout bottom */}
+        <div className="p-4 border-t border-slate-100 flex-shrink-0">
           <button
             onClick={handleLogout}
-            className={`w-full flex items-center justify-center gap-2.5 rounded-2xl bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white py-3.5 text-sm font-bold transition-all duration-300 border border-red-500/20 cursor-pointer ${
-              isCollapsed ? "px-0" : "px-4"
-            }`}
+            className={`w-full flex items-center justify-center gap-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 py-3 text-xs font-bold transition-all duration-200 border border-rose-200 cursor-pointer ${isCollapsed ? "px-0" : "px-4"
+              }`}
             title="Log Out"
           >
-            <LogOut size={16} className="flex-shrink-0" />
-            {!isCollapsed && <span>Logout</span>}
+            <LogOut size={15} className="flex-shrink-0" />
+            {!isCollapsed && <span>Logout Session</span>}
           </button>
         </div>
       </aside>
 
-      {/* 2. Mobile Left Drawer (< 1024px) */}
+      {/* Mobile Drawer */}
       {isMobileOpen && (
         <div className="lg:hidden fixed inset-0 z-50 flex">
-          {/* Backdrop overlay */}
           <div
             onClick={() => setIsMobileOpen(false)}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300"
           />
-
-          {/* Drawer container */}
-          <aside className="relative flex flex-col w-[260px] max-w-[80vw] h-full bg-[#080d1a] border-r border-white/10 shadow-2xl z-10 transition-transform duration-300">
-            {/* Header / Top */}
-            <div className="flex items-center justify-between px-5 py-6 border-b border-white/5 h-[80px]">
+          <aside className="relative flex flex-col w-[250px] max-w-[80vw] h-full bg-white border-r border-slate-200 shadow-2xl z-10">
+            <div className="flex items-center justify-between px-5 py-6 border-b border-slate-100 h-[76px]">
               <div className="flex items-center gap-3">
-                <div
-                  className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${details.themeColor} flex items-center justify-center font-black text-black text-lg`}
-                >
+                <div className={`w-9 h-9 rounded-xl ${details.themeColor} flex items-center justify-center font-black text-lg font-outfit`}>
                   {details.logoLetter}
                 </div>
                 <div>
-                  <h2 className="text-lg font-black tracking-tight text-white leading-none font-outfit">
+                  <h2 className="text-base font-black tracking-tight text-slate-900 font-outfit">
                     {details.title}
                   </h2>
-                  <span className="text-[9px] uppercase font-bold tracking-widest text-cyan-400 mt-1 block">
+                  <span className={`text-[9px] uppercase font-bold tracking-widest ${details.activeText} block font-mono`}>
                     {details.badge}
                   </span>
                 </div>
               </div>
-              <button
-                onClick={() => setIsMobileOpen(false)}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition cursor-pointer"
-              >
-                <X size={18} />
-              </button>
             </div>
 
-            {/* Menu */}
-            {renderNavLinks(true)}
+            {/* Mobile Employee Profile Card */}
+            {section === "employee" && (
+              <div className="px-5 py-4 border-b border-slate-100 flex flex-col items-center text-center space-y-2 flex-shrink-0 font-sans">
+                {employee?.profilePhoto ? (
+                  <img src={employee.profilePhoto} alt={employee?.name} className="w-14 h-14 rounded-full object-cover border border-slate-200 shadow-sm" />
+                ) : (
+                  <div className="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center font-bold text-white text-xl shadow-sm font-outfit">
+                    {employee?.name ? employee.name[0].toUpperCase() : "E"}
+                  </div>
+                )}
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900 font-outfit leading-none">{employee?.name || "Employee"}</h4>
+                  <p className="text-[9px] text-slate-500 font-mono mt-1 uppercase tracking-wider">{employee?.employeeId || "EMP001"}</p>
+                </div>
+                <div className="text-[10px] text-slate-600 font-semibold leading-tight">
+                  <p>{employee?.designation || "Intern"}</p>
+                  <p className="text-slate-400 text-[8px] uppercase font-black">{employee?.department || "Logistics"}</p>
+                </div>
+              </div>
+            )}
 
-            {/* Logout bottom */}
-            <div className="p-4 border-t border-white/5">
+            {renderNavLinks(true)}
+            <div className="p-4 border-t border-slate-100">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white py-3.5 px-4 text-sm font-bold transition-all duration-300 border border-red-500/20 cursor-pointer"
+                className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 py-3 text-xs font-bold transition duration-200 border border-rose-200"
               >
-                <LogOut size={16} />
-                <span>Logout</span>
+                <LogOut size={15} />
+                <span>Logout Session</span>
               </button>
             </div>
           </aside>
         </div>
       )}
 
-      {/* 3. Main Workspace Container */}
+      {/* Main Workspace Frame */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        {/* Top Navbar */}
         <TopNavbar />
 
-        {/* Content View Area */}
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto scrollbar-thin max-h-[calc(100vh-80px)] bg-[#030712]">
-          <div className="w-full max-w-[1600px] mx-auto transition-all duration-300 animate-fadeIn">
-            {children}
+        <main className="flex-1 p-6 md:p-8 overflow-y-auto scrollbar-thin max-h-[calc(100vh-76px)] bg-[#F8F9FA] relative">
+          <div className="w-full max-w-[1600px] mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={path}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+              >
+                {children}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </main>
       </div>
 
-      {/* 4. Global Nora Floating Drawer */}
+      {/* Nora Layer 3 AI Drawer */}
       <FloatingNora />
     </div>
   );

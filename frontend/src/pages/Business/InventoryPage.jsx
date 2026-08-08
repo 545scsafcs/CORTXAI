@@ -1,130 +1,51 @@
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import { Package, Plus, Warehouse, AlertTriangle } from "lucide-react";
+import React from "react";
+import UnifiedLayout from "../../components/layout/UnifiedLayout";
+import PageHeader from "../../components/ui/PageHeader";
+import KPICard from "../../components/ui/KPICard";
+import DataTable from "../../components/ui/DataTable";
+import Button from "../../components/ui/Button";
+import { Boxes, Plus, AlertTriangle, ArrowUpRight, Warehouse } from "lucide-react";
 
-const products = [
-  { name: "Laptop", stock: 25, warehouse: "A-12" },
-  { name: "Mouse", stock: 180, warehouse: "B-02" },
-  { name: "Keyboard", stock: 96, warehouse: "B-11" },
-  { name: "Monitor", stock: 12, warehouse: "A-08" },
+const inventoryItems = [
+  { sku: "SKU-9081", name: "iPhone 15 Pro Max", category: "Electronics", stock: "45 Units", status: "Stable" },
+  { sku: "SKU-9082", name: "MacBook Pro M3 Max", category: "Laptops", stock: "2 Units", status: "Low Stock Alert" },
+  { sku: "SKU-9083", name: "Sony WH-1000XM5", category: "Accessories", stock: "120 Units", status: "Stable" },
+  { sku: "SKU-9084", name: "Dell XPS 15 OLED", category: "Laptops", stock: "0 Units", status: "Out of Stock" },
+  { sku: "SKU-9085", name: "Logitech MX Master 3S", category: "Peripherals", stock: "85 Units", status: "Stable" },
 ];
 
 export default function InventoryPage() {
   return (
-    <DashboardLayout>
-      <div className="space-y-8">
+    <UnifiedLayout>
+      <div className="space-y-8 font-sans">
+        <PageHeader
+          title="Inventory & Warehouse Matrix"
+          subtitle="Real-time stock level synchronization, low-stock warnings, and purchase request automation."
+          badge="Inventory Suite"
+          badgeColor="from-amber-400 to-emerald-500"
+          breadcrumbs={[{ label: "Business Suite" }, { label: "Inventory" }]}
+          actions={
+            <Button variant="primary" className="bg-emerald-500 text-black hover:bg-emerald-400 font-bold text-xs">
+              <Plus size={15} className="inline mr-1.5" /> Register New SKU
+            </Button>
+          }
+        />
 
-        <div className="flex justify-between items-center">
-
-          <div>
-
-            <h1 className="text-5xl font-black">
-              Inventory
-            </h1>
-
-            <p className="text-gray-400 mt-2">
-              Products, warehouse and stock management.
-            </p>
-
-          </div>
-
-          <button className="flex items-center gap-2 bg-cyan-400 text-black px-6 py-3 rounded-xl">
-
-            <Plus size={18} />
-
-            Add Product
-
-          </button>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <KPICard title="Total SKUs" value={245} change="+12 catalog" dept="inventory" icon={Boxes} />
+          <KPICard title="Low Stock Alerts" value={2} change="Action Required" dept="inventory" icon={AlertTriangle} />
+          <KPICard title="Warehouse Hubs" value={3} change="Main, West, East" dept="inventory" icon={Warehouse} />
+          <KPICard title="Inbound Shipments" value={14} change="En route" dept="inventory" icon={ArrowUpRight} />
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-6">
-
-          <Card title="Products" value="245" icon={<Package />} />
-
-          <Card title="Warehouses" value="5" icon={<Warehouse />} />
-
-          <Card title="Low Stock" value="14" icon={<AlertTriangle />} />
-
-          <Card title="Stock Value" value="₹1.8Cr" icon={<Package />} />
-
-        </div>
-
-        <div className="rounded-3xl bg-white/5 border border-white/10 p-8">
-
-          <h2 className="text-2xl font-bold mb-8">
-
-            Products
-
-          </h2>
-
-          <table className="w-full">
-
-            <thead>
-
-              <tr className="text-left text-gray-400">
-
-                <th>Name</th>
-
-                <th>Stock</th>
-
-                <th>Warehouse</th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {products.map((item) => (
-
-                <tr
-                  key={item.name}
-                  className="border-t border-white/10"
-                >
-
-                  <td className="py-5">
-                    {item.name}
-                  </td>
-
-                  <td>
-                    {item.stock}
-                  </td>
-
-                  <td>
-                    {item.warehouse}
-                  </td>
-
-                </tr>
-
-              ))}
-
-            </tbody>
-
-          </table>
-
-        </div>
-
+        <DataTable
+          title="Active Stock Directory"
+          subtitle="Real-time item status across registered distribution centers."
+          columns={["SKU Code", "Product Name", "Category", "Stock Count", "Status"]}
+          data={inventoryItems}
+          searchPlaceholder="Filter SKUs by code, name, or status..."
+        />
       </div>
-    </DashboardLayout>
-  );
-}
-
-function Card({ title, value, icon }) {
-  return (
-    <div className="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-      <div className="text-cyan-400">
-        {icon}
-      </div>
-
-      <p className="text-gray-400 mt-5">
-        {title}
-      </p>
-
-      <h2 className="text-4xl font-bold mt-3">
-        {value}
-      </h2>
-
-    </div>
+    </UnifiedLayout>
   );
 }

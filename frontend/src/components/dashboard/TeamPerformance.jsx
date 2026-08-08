@@ -11,29 +11,27 @@ const team = [
 
 export default function TeamPerformance() {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-xl">
-      <h2 className="text-2xl font-bold mb-6 text-white font-outfit flex items-center gap-2">
-        <Award size={20} className="text-cyan-400" /> Team Performance
+    <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/40 font-sans">
+      <h2 className="text-xl font-bold mb-6 text-slate-900 font-outfit flex items-center gap-2">
+        <Award size={18} className="text-indigo-600" /> Department Health Scores
       </h2>
 
-      <div className="space-y-5">
+      <div className="space-y-4">
         {team.map(([name, value]) => (
           <div key={name} className="group">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-semibold text-gray-300 group-hover:text-white transition-colors duration-300 font-outfit">
+            <div className="flex justify-between items-center mb-1.5">
+              <span className="text-xs font-bold text-slate-900 font-outfit">
                 {name} Department
               </span>
-              <span className="text-sm font-bold text-cyan-400 font-mono">
+              <span className="text-xs font-bold text-indigo-600 font-mono">
                 {value}%
               </span>
             </div>
 
-            <div className="h-2 rounded-full bg-white/5 border border-white/5 overflow-hidden">
+            <div className="h-2 rounded-full bg-slate-100 border border-slate-200 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-1000 ease-out group-hover:brightness-115"
-                style={{
-                  width: `${value}%`,
-                }}
+                className="h-full rounded-full bg-slate-900 transition-all duration-700 ease-out"
+                style={{ width: `${value}%` }}
               />
             </div>
           </div>

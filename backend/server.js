@@ -10,6 +10,7 @@ import employeeRoutes from "./routes/hr/employeeRoutes.js";
 import attendanceRoutes from "./routes/attendance/attendanceRoutes.js";
 import leaveRoutes from "./routes/leave/leaveRoutes.js";
 import queryRoutes from "./routes/hr/queryRoutes.js";
+import crmRoutes from "./routes/crm/crmRoutes.js";
 
 dotenv.config();
 
@@ -89,6 +90,15 @@ app.use(
 );
 
 /* ============================
+          CRM Routes
+============================ */
+
+app.use(
+  "/api/crm",
+  crmRoutes
+);
+
+/* ============================
           404 Handler
 ============================ */
 
@@ -123,10 +133,23 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-
+const server = app.listen(PORT, () => {
   console.log(
     `🚀 Server Running : http://localhost:${PORT}`
   );
+});
 
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(`\n==================================================`);
+    console.error(`[Server Alert] EADDRINUSE: Port ${PORT} is already occupied!`);
+    console.error(`Another Node.js instance or CORTXAI backend process is already running.`);
+    console.error(`Avoiding starting another duplicate instance to prevent port conflicts.`);
+    console.error(`Exiting gracefully...`);
+    console.error(`==================================================\n`);
+    process.exit(0); // Exit cleanly since another server instance is already running
+  } else {
+    console.error("Server experienced startup error:", error);
+    process.exit(1);
+  }
 });

@@ -2,33 +2,33 @@ import React from "react";
 import { Clock } from "lucide-react";
 
 const activity = [
-  "New employee joined",
-  "Inventory updated",
-  "Invoice generated",
-  "Nora completed payroll",
-  "Monthly report exported",
+  "New employee joined system",
+  "Inventory warehouse matrix updated",
+  "Customer invoice generated",
+  "Nora AI completed payroll reconciliations",
+  "Monthly performance report exported",
 ];
 
 export default function RecentActivity() {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-xl">
-      <h2 className="text-2xl font-bold mb-6 text-white font-outfit flex items-center gap-2">
-        <Clock size={20} className="text-cyan-400" /> Recent Activity
+    <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/40 font-sans">
+      <h2 className="text-xl font-bold mb-6 text-slate-900 font-outfit flex items-center gap-2">
+        <Clock size={18} className="text-indigo-600" /> Recent System Activity
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {activity.map((item, index) => (
           <div
             key={index}
-            className="flex items-center justify-between py-3.5 border-b border-white/5 last:border-b-0 hover:bg-white/[0.01] px-4 rounded-xl transition-all duration-300"
+            className="flex items-center justify-between py-3 px-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100 transition duration-200"
           >
             <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 shadow-md shadow-cyan-500/30 animate-pulse shrink-0" />
-              <p className="text-sm font-semibold text-gray-250 font-outfit leading-none mt-0.5">
+              <span className="w-2 h-2 rounded-full bg-indigo-600 shrink-0" />
+              <p className="text-xs font-bold text-slate-900 font-outfit">
                 {item}
               </p>
             </div>
-            <span className="text-xs text-gray-500 font-bold uppercase tracking-wider font-mono">
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-mono">
               {index + 2}m ago
             </span>
           </div>

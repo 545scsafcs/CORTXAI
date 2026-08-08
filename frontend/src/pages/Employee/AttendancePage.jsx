@@ -56,17 +56,17 @@ export default function AttendancePage() {
 
     <EmployeeLayout>
 
-      <div className="space-y-8">
+      <div className="space-y-8 text-slate-900 font-sans">
 
         <div>
 
-          <h1 className="text-5xl font-black">
+          <h1 className="text-5xl font-black text-slate-900 font-outfit">
 
             Attendance
 
           </h1>
 
-          <p className="text-gray-400 mt-2">
+          <p className="text-slate-600 mt-2 font-medium">
 
             Your attendance overview
 
@@ -78,15 +78,15 @@ export default function AttendancePage() {
 
         <div className="grid lg:grid-cols-4 gap-6">
 
-          <div className="rounded-3xl bg-white/5 border border-white/10 p-6">
+          <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-6">
 
-            <h3 className="text-gray-400">
+            <h3 className="text-slate-500 font-extrabold text-xs uppercase tracking-wider">
 
               Today's Status
 
             </h3>
 
-            <h2 className="text-4xl font-black mt-3 text-green-400">
+            <h2 className="text-4xl font-black mt-3 text-emerald-600 font-outfit">
 
               {
 
@@ -106,15 +106,15 @@ export default function AttendancePage() {
 
           </div>
 
-          <div className="rounded-3xl bg-white/5 border border-white/10 p-6">
+          <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-6">
 
-            <h3 className="text-gray-400">
+            <h3 className="text-slate-500 font-extrabold text-xs uppercase tracking-wider">
 
               Check In
 
             </h3>
 
-            <h2 className="text-4xl font-black mt-3">
+            <h2 className="text-4xl font-black mt-3 text-slate-900 font-outfit">
 
               {
 
@@ -144,15 +144,15 @@ export default function AttendancePage() {
 
           </div>
 
-          <div className="rounded-3xl bg-white/5 border border-white/10 p-6">
+          <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-6">
 
-            <h3 className="text-gray-400">
+            <h3 className="text-slate-500 font-extrabold text-xs uppercase tracking-wider">
 
               Check Out
 
             </h3>
 
-            <h2 className="text-4xl font-black mt-3">
+            <h2 className="text-4xl font-black mt-3 text-slate-900 font-outfit">
 
               {
 
@@ -182,15 +182,15 @@ export default function AttendancePage() {
 
           </div>
 
-          <div className="rounded-3xl bg-white/5 border border-white/10 p-6">
+          <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-6">
 
-            <h3 className="text-gray-400">
+            <h3 className="text-slate-500 font-extrabold text-xs uppercase tracking-wider">
 
               Working Hours
 
             </h3>
 
-            <h2 className="text-4xl font-black mt-3 text-cyan-400">
+            <h2 className="text-4xl font-black mt-3 text-emerald-600 font-outfit">
 
               {
 
@@ -216,22 +216,23 @@ export default function AttendancePage() {
 
         <div className="grid lg:grid-cols-2 gap-8">
 
-          <div className="rounded-3xl bg-white/5 border border-white/10 p-8">
+          <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
 
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-2xl font-bold text-slate-900 font-outfit">
 
               Today's Attendance
 
             </h2>
 
-            <div className="mt-8 space-y-5">
+            <div className="mt-8 space-y-4">
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
                 📅 Date :
 
                 {" "}
 
+                <span className="text-slate-900 font-bold ml-1">
                 {
 
                   attendance?.date
@@ -249,15 +250,17 @@ export default function AttendancePage() {
                     "--"
 
                 }
+                </span>
 
               </div>
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
                 🟢 Status :
 
                 {" "}
 
+                <span className="text-emerald-700 font-bold ml-1">
                 {
 
                   attendance
@@ -271,15 +274,17 @@ export default function AttendancePage() {
                     "--"
 
                 }
+                </span>
 
               </div>
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
                 🕒 Check In :
 
                 {" "}
 
+                <span className="text-slate-900 font-bold ml-1">
                 {
 
                   attendance?.checkIn
@@ -303,15 +308,17 @@ export default function AttendancePage() {
                     "--"
 
                 }
+                </span>
 
               </div>
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
                 🕔 Check Out :
 
                 {" "}
 
+                <span className="text-slate-900 font-bold ml-1">
                 {
 
                   attendance?.checkOut
@@ -335,6 +342,7 @@ export default function AttendancePage() {
                     "--"
 
                 }
+                </span>
 
               </div>
 
@@ -342,46 +350,47 @@ export default function AttendancePage() {
 
           </div>
 
-          <div className="rounded-3xl bg-white/5 border border-white/10 p-8">
+          <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
 
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-2xl font-bold text-slate-900 font-outfit">
 
               Summary
 
             </h2>
 
-            <div className="mt-8 space-y-5">
+            <div className="mt-8 space-y-4">
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
-                👤 {employee?.firstName} {employee?.lastName}
-
-              </div>
-
-              <div className="rounded-xl bg-white/5 p-5">
-
-                🆔 {employee?.employeeId}
+                👤 Name : <span className="text-slate-900 font-bold ml-1">{employee?.firstName} {employee?.lastName}</span>
 
               </div>
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
-                🏢 {employee?.department}
-
-              </div>
-
-              <div className="rounded-xl bg-white/5 p-5">
-
-                💼 {employee?.designation}
+                🆔 ID : <span className="text-slate-900 font-mono font-bold ml-1">{employee?.employeeId}</span>
 
               </div>
 
-              <div className="rounded-xl bg-white/5 p-5">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
+
+                🏢 Dept : <span className="text-slate-900 font-bold ml-1">{employee?.department}</span>
+
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
+
+                💼 Role : <span className="text-slate-900 font-bold ml-1">{employee?.designation}</span>
+
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm font-semibold text-slate-700">
 
                 ⏱ Working Hours :
 
                 {" "}
 
+                <span className="text-emerald-700 font-bold ml-1">
                 {
 
                   attendance
@@ -395,6 +404,7 @@ export default function AttendancePage() {
                     0
 
                 }h
+                </span>
 
               </div>
 

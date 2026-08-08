@@ -1,46 +1,39 @@
 import React from "react";
 import { ClipboardList } from "lucide-react";
+import Badge from "../ui/Badge";
 
 const orders = [
-  ["#1023", "Rahul", "₹1200", "Completed"],
-  ["#1024", "Aman", "₹3500", "Pending"],
-  ["#1025", "Priya", "₹800", "Completed"],
-  ["#1026", "Ankit", "₹6400", "Completed"],
+  ["#1023", "Rahul Sharma", "₹1,200", "Completed"],
+  ["#1024", "Aman Verma", "₹3,500", "Pending"],
+  ["#1025", "Priya Singh", "₹800", "Completed"],
+  ["#1026", "Ankit Gupta", "₹6,400", "Completed"],
 ];
 
 export default function RecentOrders() {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-xl overflow-hidden">
-      <h2 className="text-2xl font-bold mb-6 text-white font-outfit flex items-center gap-2">
-        <ClipboardList size={20} className="text-cyan-400" /> Recent Orders
+    <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/40 font-sans">
+      <h2 className="text-xl font-bold mb-6 text-slate-900 font-outfit flex items-center gap-2">
+        <ClipboardList size={18} className="text-indigo-600" /> Recent Customer Orders
       </h2>
 
-      <div className="overflow-x-auto rounded-2xl border border-white/5 bg-white/[0.01]">
-        <table className="w-full text-left border-collapse">
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+        <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="text-gray-400 text-sm border-b border-white/10 bg-white/[0.01]">
-              <th className="p-4 font-semibold font-outfit">ID</th>
-              <th className="p-4 font-semibold font-outfit">Customer</th>
-              <th className="p-4 font-semibold font-outfit">Amount</th>
-              <th className="p-4 font-semibold font-outfit">Status</th>
+            <tr className="text-slate-500 uppercase font-bold text-[10px] tracking-wider border-b border-slate-200 bg-slate-50">
+              <th className="px-5 py-3.5 font-outfit">Order ID</th>
+              <th className="px-5 py-3.5 font-outfit">Customer</th>
+              <th className="px-5 py-3.5 font-outfit">Amount</th>
+              <th className="px-5 py-3.5 font-outfit">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5 text-gray-300">
+          <tbody className="divide-y divide-slate-100 text-slate-800">
             {orders.map((item) => (
-              <tr key={item[0]} className="hover:bg-white/[0.01] transition-all duration-200">
-                <td className="p-4 font-mono text-cyan-400 text-sm">{item[0]}</td>
-                <td className="p-4 font-semibold text-white font-outfit">{item[1]}</td>
-                <td className="p-4 font-mono text-sm">{item[2]}</td>
-                <td className="p-4">
-                  <span
-                    className={`inline-block px-2.5 py-1 rounded-full text-xs font-bold ${
-                      item[3] === "Completed"
-                        ? "bg-green-500/10 text-green-400 border border-green-500/10"
-                        : "bg-yellow-500/10 text-yellow-400 border border-yellow-500/10"
-                    }`}
-                  >
-                    {item[3]}
-                  </span>
+              <tr key={item[0]} className="hover:bg-slate-50 transition-colors duration-150">
+                <td className="px-5 py-3.5 font-mono font-bold text-slate-900">{item[0]}</td>
+                <td className="px-5 py-3.5 font-bold text-slate-900 font-outfit">{item[1]}</td>
+                <td className="px-5 py-3.5 font-mono">{item[2]}</td>
+                <td className="px-5 py-3.5">
+                  <Badge variant={item[3] === "Completed" ? "success" : "warning"}>{item[3]}</Badge>
                 </td>
               </tr>
             ))}

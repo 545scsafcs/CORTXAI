@@ -18,75 +18,75 @@ export default function EmployeeTable({
 
   if (!employees || employees.length === 0) {
     return (
-      <div className="text-center py-20 text-gray-400 bg-white/[0.02] border border-white/10 rounded-3xl">
-        <p className="text-xl font-bold font-outfit">No employees found.</p>
-        <p className="text-sm mt-2 text-gray-500 font-outfit">Create a new employee to get started.</p>
+      <div className="text-center py-20 text-slate-500 bg-white border border-slate-200/80 rounded-3xl shadow-sm">
+        <p className="text-lg font-bold font-outfit text-slate-900">No employees found.</p>
+        <p className="text-xs mt-1 text-slate-500 font-sans">Create a new employee to get started.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl shadow-xl">
+    <div className="overflow-x-auto rounded-3xl border border-slate-200/80 bg-white shadow-sm font-sans">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="border-b border-white/10 text-gray-400 text-sm bg-white/[0.01]">
-            <th className="p-5 font-semibold font-outfit">ID</th>
-            <th className="p-5 font-semibold font-outfit">Name</th>
-            <th className="p-5 font-semibold font-outfit">Email</th>
-            <th className="p-5 font-semibold font-outfit">Department</th>
-            <th className="p-5 font-semibold font-outfit">Designation</th>
-            <th className="p-5 font-semibold font-outfit">Salary</th>
-            <th className="p-5 font-semibold font-outfit">Status</th>
-            <th className="p-5 font-semibold font-outfit text-center">Actions</th>
+          <tr className="border-b border-slate-200 text-slate-900 text-[11px] font-black uppercase tracking-wider bg-slate-100/90 backdrop-blur-md">
+            <th className="p-4 font-outfit">ID</th>
+            <th className="p-4 font-outfit">Name</th>
+            <th className="p-4 font-outfit">Email</th>
+            <th className="p-4 font-outfit">Department</th>
+            <th className="p-4 font-outfit">Designation</th>
+            <th className="p-4 font-outfit">Salary</th>
+            <th className="p-4 font-outfit">Status</th>
+            <th className="p-4 font-outfit text-center">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/5 text-gray-300">
+        <tbody className="divide-y divide-slate-100 text-slate-700 text-xs">
           {employees.map((emp) => (
-            <tr key={emp._id} className="hover:bg-white/[0.02] transition-colors duration-200">
-              <td className="p-5 font-mono text-cyan-400 text-sm">
+            <tr key={emp._id} className="hover:bg-slate-50/80 transition-colors duration-150">
+              <td className="p-4 font-mono text-indigo-700 font-bold text-xs">
                 {emp.employeeId}
               </td>
-              <td className="p-5 font-bold text-white font-outfit">
+              <td className="p-4 font-bold text-slate-900 font-outfit text-xs">
                 {emp.firstName} {emp.lastName}
               </td>
-              <td className="p-5 text-sm font-mono">{emp.email}</td>
-              <td className="p-5 font-outfit">{emp.department || "--"}</td>
-              <td className="p-5 text-sm font-outfit">{emp.designation || "--"}</td>
-              <td className="p-5 text-sm font-mono">
+              <td className="p-4 text-xs font-mono text-slate-600">{emp.email}</td>
+              <td className="p-4 font-medium text-slate-700">{emp.department || "--"}</td>
+              <td className="p-4 text-xs font-medium text-slate-700">{emp.designation || "--"}</td>
+              <td className="p-4 text-xs font-mono font-bold text-slate-900">
                 ₹{emp.salary ? emp.salary.toLocaleString() : "0"}
               </td>
-              <td className="p-5">
+              <td className="p-4">
                 <span
-                  className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold ${
+                  className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
                     emp.status === "Active"
-                      ? "bg-green-500/10 text-green-400 border border-green-500/10"
+                      ? "bg-emerald-50 text-emerald-800 border border-emerald-200/90"
                       : emp.status === "Inactive"
-                      ? "bg-red-500/10 text-red-400 border border-red-500/10"
-                      : "bg-yellow-500/10 text-yellow-400 border border-yellow-500/10"
+                      ? "bg-rose-50 text-rose-800 border border-rose-200/90"
+                      : "bg-amber-50 text-amber-900 border border-amber-200/90"
                   }`}
                 >
                   {emp.status || "Active"}
                 </span>
               </td>
-              <td className="p-5">
-                <div className="flex items-center justify-center gap-3">
+              <td className="p-4">
+                <div className="flex items-center justify-center gap-2">
                   <button
                     onClick={() => onView(emp)}
-                    className="w-8 h-8 rounded-xl bg-white/5 hover:bg-cyan-500 hover:text-black flex items-center justify-center transition-all duration-300 text-cyan-400 cursor-pointer border border-white/5"
+                    className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-indigo-700 flex items-center justify-center transition-all duration-200 border border-slate-200 cursor-pointer"
                     title="View Profile"
                   >
                     <Eye size={14} />
                   </button>
                   <button
                     onClick={() => onEdit(emp)}
-                    className="w-8 h-8 rounded-xl bg-white/5 hover:bg-yellow-500 hover:text-black flex items-center justify-center transition-all duration-300 text-yellow-400 cursor-pointer border border-white/5"
+                    className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-amber-700 flex items-center justify-center transition-all duration-200 border border-slate-200 cursor-pointer"
                     title="Edit Employee"
                   >
                     <Edit2 size={14} />
                   </button>
                   <button
                     onClick={() => onDelete(emp._id)}
-                    className="w-8 h-8 rounded-xl bg-white/5 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all duration-300 text-red-400 cursor-pointer border border-white/5"
+                    className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-rose-100 text-rose-700 flex items-center justify-center transition-all duration-200 border border-slate-200 cursor-pointer"
                     title="Delete Employee"
                   >
                     <Trash2 size={14} />

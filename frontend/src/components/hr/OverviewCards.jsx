@@ -41,23 +41,23 @@ export default function OverviewCards() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-      <Card title="Total Team" value={loading ? "..." : data.total} icon={<Users />} color="text-cyan-400" />
-      <Card title="Active Status" value={loading ? "..." : data.active} icon={<UserCheck />} color="text-green-400" />
-      <Card title="Present Today" value={loading ? "..." : data.present} icon={<CalendarCheck />} color="text-yellow-400" />
-      <Card title="Pending Leaves" value={loading ? "..." : data.pendingLeaves} icon={<Clock />} color="text-purple-400" />
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 font-sans">
+      <Card title="Total Team" value={loading ? "..." : data.total} icon={<Users size={20} />} color="text-indigo-700" />
+      <Card title="Active Status" value={loading ? "..." : data.active} icon={<UserCheck size={20} />} color="text-emerald-700" />
+      <Card title="Present Today" value={loading ? "..." : data.present} icon={<CalendarCheck size={20} />} color="text-amber-700" />
+      <Card title="Pending Leaves" value={loading ? "..." : data.pendingLeaves} icon={<Clock size={20} />} color="text-rose-700" />
     </div>
   );
 }
 
 function Card({ title, value, icon, color }) {
   return (
-    <div className="rounded-3xl bg-white/5 border border-white/10 p-6 flex items-center justify-between">
+    <div className="rounded-3xl bg-white border border-slate-200/80 p-6 flex items-center justify-between shadow-sm hover:shadow-md transition">
       <div>
-        <p className="text-gray-400 text-sm">{title}</p>
-        <h2 className="text-4xl font-black mt-3 text-white">{value}</h2>
+        <p className="text-slate-500 text-[11px] font-extrabold uppercase tracking-wider font-outfit">{title}</p>
+        <h2 className="text-3xl lg:text-4xl font-black mt-2 text-slate-900 font-outfit tracking-tight">{value}</h2>
       </div>
-      <div className={`p-4 bg-white/5 rounded-2xl ${color}`}>
+      <div className={`p-3.5 bg-slate-100 border border-slate-200 rounded-2xl ${color}`}>
         {icon}
       </div>
     </div>

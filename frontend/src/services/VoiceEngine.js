@@ -29,8 +29,6 @@ function createRecognition() {
       transcript += event.results[i][0].transcript.toLowerCase();
     }
 
-    console.log(mode.toUpperCase(), transcript);
-
     if (mode === "wake") {
       if (
         transcript.includes("hey nora") ||

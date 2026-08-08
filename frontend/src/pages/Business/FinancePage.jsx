@@ -1,199 +1,50 @@
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import {
-Wallet,
-Receipt,
-TrendingUp,
-CircleDollarSign,
-Plus
-} from "lucide-react";
+import React from "react";
+import UnifiedLayout from "../../components/layout/UnifiedLayout";
+import PageHeader from "../../components/ui/PageHeader";
+import KPICard from "../../components/ui/KPICard";
+import DataTable from "../../components/ui/DataTable";
+import Button from "../../components/ui/Button";
+import { Wallet, TrendingUp, DollarSign, FileText, ArrowDownLeft, ArrowUpRight } from "lucide-react";
 
-const invoices = [
-{
-id:"INV-1001",
-client:"ABC Pvt Ltd",
-amount:"₹45,000",
-status:"Paid"
-},
-{
-id:"INV-1002",
-client:"XYZ Industries",
-amount:"₹18,500",
-status:"Pending"
-},
-{
-id:"INV-1003",
-client:"TechNova",
-amount:"₹82,000",
-status:"Paid"
-},
-{
-id:"INV-1004",
-client:"Sky Solutions",
-amount:"₹12,800",
-status:"Pending"
-}
+const transactions = [
+  { id: "TX-1092", desc: "Vercel Enterprise Subscription", category: "Software SaaS", amount: "INR 1,25,000", type: "Expense", status: "Approved" },
+  { id: "TX-1093", desc: "Linear App Customer Invoice", category: "Revenue", amount: "INR 4,50,000", type: "Income", status: "Paid" },
+  { id: "TX-1094", desc: "Monthly Staff Payroll Disbursal", category: "Human Capital", amount: "INR 18,20,000", type: "Expense", status: "Approved" },
+  { id: "TX-1095", desc: "Apple Hardware Procurement", category: "Assets", amount: "INR 3,40,000", type: "Expense", status: "Processing" },
 ];
 
-export default function FinancePage(){
-
-return(
-
-<DashboardLayout>
-
-<div className="space-y-8">
-
-<div className="flex justify-between items-center">
-
-<div>
-
-<h1 className="text-5xl font-black">
-
-Finance
-
-</h1>
-
-<p className="text-gray-400 mt-2">
-
-Track revenue, invoices and expenses.
-
-</p>
-
-</div>
-
-<button className="flex items-center gap-2 bg-cyan-400 text-black px-6 py-3 rounded-xl">
-
-<Plus size={18}/>
-
-New Invoice
-
-</button>
-
-</div>
-
-<div className="grid lg:grid-cols-4 gap-6">
-
-<Card title="Revenue" value="₹2.4 Cr" icon={<TrendingUp/>}/>
-
-<Card title="Expenses" value="₹78 L" icon={<Wallet/>}/>
-
-<Card title="Invoices" value="248" icon={<Receipt/>}/>
-
-<Card title="Profit" value="₹1.62 Cr" icon={<CircleDollarSign/>}/>
-
-</div>
-
-<div className="rounded-3xl bg-white/5 border border-white/10 p-8">
-
-<h2 className="text-2xl font-bold mb-8">
-
-Recent Invoices
-
-</h2>
-
-<table className="w-full">
-
-<thead>
-
-<tr className="text-left text-gray-400">
-
-<th>ID</th>
-
-<th>Client</th>
-
-<th>Amount</th>
-
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{
-
-invoices.map((invoice)=>(
-
-<tr key={invoice.id} className="border-t border-white/10">
-
-<td className="py-5">
-
-{invoice.id}
-
-</td>
-
-<td>
-
-{invoice.client}
-
-</td>
-
-<td>
-
-{invoice.amount}
-
-</td>
-
-<td>
-
-<span className={`font-semibold ${
-invoice.status==="Paid"
-?"text-green-400"
-:"text-yellow-400"
-}`}>
-
-{invoice.status}
-
-</span>
-
-</td>
-
-</tr>
-
-))
-
-}
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</DashboardLayout>
-
-)
-
-}
-
-function Card({title,value,icon}){
-
-return(
-
-<div className="rounded-3xl bg-white/5 border border-white/10 p-6">
-
-<div className="text-cyan-400">
-
-{icon}
-
-</div>
-
-<p className="text-gray-400 mt-5">
-
-{title}
-
-</p>
-
-<h2 className="text-4xl font-bold mt-3">
-
-{value}
-
-</h2>
-
-</div>
-
-)
-
+export default function FinancePage() {
+  return (
+    <UnifiedLayout>
+      <div className="space-y-8 font-sans">
+        <PageHeader
+          title="Finance & Ledger Control"
+          subtitle="Continuous double-entry ledger reconciliations, revenue tracking, and automated tax reporting."
+          badge="Finance Suite"
+          badgeColor="from-amber-400 to-orange-500"
+          breadcrumbs={[{ label: "Business Suite" }, { label: "Finance" }]}
+          actions={
+            <Button variant="primary" className="bg-amber-500 text-black hover:bg-amber-400 font-bold text-xs">
+              <FileText size={15} className="inline mr-1.5" /> Download Tax Statement
+            </Button>
+          }
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <KPICard title="Gross Managed" value="INR 1.8B" change="+14.2%" dept="finance" icon={Wallet} />
+          <KPICard title="Monthly Income" value="INR 45.2L" change="+18.5%" dept="finance" icon={ArrowDownLeft} />
+          <KPICard title="Monthly Expenses" value="INR 22.8L" change="-4.1% vs budget" dept="finance" icon={ArrowUpRight} />
+          <KPICard title="Net Margin" value="49.5%" change="Optimal Health" dept="finance" icon={TrendingUp} />
+        </div>
+
+        <DataTable
+          title="General Accounts Ledger"
+          subtitle="Real-time transaction entries logged across corporate bank accounts."
+          columns={["TX ID", "Description", "Category", "Amount", "Type", "Status"]}
+          data={transactions}
+          searchPlaceholder="Search transactions by ID or vendor..."
+        />
+      </div>
+    </UnifiedLayout>
+  );
 }

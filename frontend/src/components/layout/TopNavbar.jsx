@@ -1,236 +1,149 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, Bell, Bot, Search, Sun, Moon, Sparkles } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { Menu, Bell, Search, Sparkles, Command, X } from "lucide-react";
 import { useSidebar } from "../../context/SidebarContext";
 import { useEmployee } from "../../context/EmployeeContext";
 import { useNora } from "../../context/NoraContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function TopNavbar() {
   const location = useLocation();
-  const navigate = useNavigate();
   const { toggleSidebar, toggleMobile } = useSidebar();
   const { employee } = useEmployee();
   const { setOpen: setNoraOpen } = useNora();
-  const [isDark, setIsDark] = useState(true); // default dark
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Determine Title based on pathname
-  const getPageTitle = (path) => {
-    switch (path) {
-      // Business Portal
-      case "/dashboard":
-        return "Business Dashboard";
-      case "/dashboard/hr":
-        return "Business HR Suite";
-      case "/dashboard/inventory":
-        return "Inventory Manager";
-      case "/dashboard/finance":
-        return "Finance & Ledger";
-      case "/dashboard/analytics":
-        return "Analytics Intelligence";
-      case "/dashboard/agents":
-        return "Autonomous AI Workforce";
-      case "/dashboard/settings":
-        return "System Settings";
+  const path = location.pathname;
 
-      // HR Portal
-      case "/hr":
-        return "HR Portal Dashboard";
-      case "/hr/employees":
-        return "Company Directory";
-      case "/hr/attendance":
-        return "Attendance Records";
-      case "/hr/leave":
-        return "Leave Requests Panel";
-      case "/hr/payroll":
-        return "Payroll Operations";
-      case "/hr/recruitment":
-        return "Talent Acquisition";
-      case "/hr/performance":
-        return "Performance Tracking";
-      case "/hr/reports":
-        return "HR Insights & Reports";
-      case "/hr/agent":
-        return "Nora HR Recruiter";
-      case "/hr/settings":
-        return "HR General Settings";
-
-      // Employee Portal
-      case "/employee":
-        return "Employee Dashboard";
-      case "/employee/attendance":
-        return "My Attendance Log";
-      case "/employee/leave":
-        return "My Leave Portal";
-      case "/employee/salary":
-        return "My Compensation";
-      case "/employee/profile":
-        return "My Professional Profile";
-      case "/employee/contact-hr":
-        return "HR Helpdesk Chat";
-
-      // Admin Portal
-      case "/admin":
-        return "System Control Hub";
-      case "/admin/employees":
-        return "User Permissions Manager";
-      case "/admin/departments":
-        return "Department Controller";
-      case "/admin/reports":
-        return "System Logs & Reports";
-      case "/admin/agents":
-        return "AI Orchestrator";
-      case "/admin/settings":
-        return "Master Core Settings";
-
-      default:
-        return "CortxAI Workspace";
-    }
+  const getSectionBadge = () => {
+    if (path.startsWith("/admin")) return { label: "Admin Suite", col: "bg-red-50 text-red-900 border-red-200" };
+    if (path.startsWith("/hr")) return { label: "HR Portal", col: "bg-indigo-50 text-indigo-900 border-indigo-200" };
+    if (path.startsWith("/employee")) return { label: "Employee Space", col: "bg-teal-50 text-teal-900 border-teal-200" };
+    if (path.startsWith("/crm")) return { label: "CRM Suite", col: "bg-rose-50 text-rose-900 border-rose-200" };
+    if (path.startsWith("/inventory")) return { label: "Inventory Matrix", col: "bg-emerald-50 text-emerald-900 border-emerald-200" };
+    return { label: "Business OS", col: "bg-slate-100 text-slate-900 border-slate-200" };
   };
 
-  const title = getPageTitle(location.pathname);
-
-  // Get current portal details based on path
-  const getPortalUser = () => {
-    const path = location.pathname;
-    if (path.startsWith("/employee")) {
-      return {
-        name: employee ? `${employee.firstName} ${employee.lastName}` : "Employee User",
-        sub: employee?.designation || "Staff",
-        avatar: employee?.profilePhoto,
-        initials: employee?.firstName?.charAt(0) || "E",
-      };
-    } else if (path.startsWith("/hr")) {
-      return {
-        name: employee ? `${employee.firstName} ${employee.lastName || ""}`.trim() : "HR Manager",
-        sub: employee?.designation || "People Operations",
-        avatar: employee?.profilePhoto,
-        initials: employee?.firstName?.charAt(0) || "HR",
-      };
-    } else if (path.startsWith("/admin")) {
-      return {
-        name: "System Admin",
-        sub: "Root Authority",
-        avatar: null,
-        initials: "AD",
-      };
-    } else {
-      return {
-        name: "Business Owner",
-        sub: "Enterprise Owner",
-        avatar: null,
-        initials: "BO",
-      };
-    }
-  };
-
-  const user = getPortalUser();
-
-  const handleHamburgerClick = () => {
-    // If desktop (>= 1024px) toggle standard collapse, else toggle mobile drawer
-    if (window.innerWidth >= 1024) {
-      toggleSidebar();
-    } else {
-      toggleMobile();
-    }
-  };
+  const badge = getSectionBadge();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-slate-950/60 backdrop-blur-md px-6 py-4 flex items-center justify-between">
-      {/* Left Area: Hamburger & Title */}
+    <header className="h-[76px] border-b border-slate-200/80 bg-white/80 backdrop-blur-2xl px-6 flex items-center justify-between sticky top-0 z-30 font-sans">
+      {/* Left: Mobile/Sidebar toggle & Title */}
       <div className="flex items-center gap-4">
         <button
-          onClick={handleHamburgerClick}
-          className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition duration-200 cursor-pointer"
+          onClick={toggleSidebar}
+          className="hidden lg:flex p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition cursor-pointer"
+          title="Toggle Sidebar"
         >
-          <Menu size={20} />
+          <Menu size={18} />
         </button>
 
-        <div>
-          <h1 className="text-xl font-bold tracking-tight text-white font-outfit">
-            {title}
-          </h1>
+        <button
+          onClick={toggleMobile}
+          className="lg:hidden p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition cursor-pointer"
+        >
+          <Menu size={18} />
+        </button>
+
+        <div className="hidden sm:flex items-center gap-3">
+          <span className={`text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full border ${badge.col} font-mono shadow-sm`}>
+            {badge.label}
+          </span>
         </div>
       </div>
 
-      {/* Middle Area: Search (Hidden on Mobile) */}
-      <div className="hidden md:flex items-center w-full max-w-sm relative">
-        <span className="absolute left-3.5 text-gray-500">
-          <Search size={16} />
-        </span>
-        <input
-          type="text"
-          placeholder="Search workspace, AI commands, files..."
-          className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm placeholder-gray-500 text-white outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400/50 transition-all duration-300"
-        />
+      {/* Center: Command-Bar Search Input */}
+      <div className="flex-1 max-w-md mx-6 hidden md:block">
+        <div className="relative">
+          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search commands, employees, SKUs, or metrics..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-slate-100/90 border border-slate-200 rounded-2xl pl-10 pr-12 py-2 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 transition font-sans shadow-inner"
+          />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-0.5 text-[10px] font-mono text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-200">
+            <Command size={10} /> K
+          </div>
+        </div>
       </div>
 
-      {/* Right Area: Actions & Profile */}
-      <div className="flex items-center gap-4">
-        {/* Toggle Theme Mock */}
-        <button
-          onClick={() => setIsDark(!isDark)}
-          className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition cursor-pointer"
-          title="Toggle Theme"
-        >
-          {isDark ? <Moon size={18} /> : <Sun size={18} />}
-        </button>
-
-        {/* Nora Quick Button */}
+      {/* Right: Actions, Nora Trigger, Notifications, Profile */}
+      <div className="flex items-center gap-3">
+        {/* Ask Nora AI Quick Trigger */}
         <button
           onClick={() => setNoraOpen(true)}
-          className="relative group p-2 rounded-xl bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 hover:border-cyan-400 text-cyan-400 hover:text-cyan-300 transition duration-300 cursor-pointer flex items-center gap-1.5"
-          title="Wake Nora AI"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-[#0F172A] text-white hover:bg-slate-800 transition duration-200 text-xs font-bold shadow-md cursor-pointer"
         >
-          <Bot size={18} className="group-hover:animate-pulse" />
-          <span className="hidden sm:inline text-xs font-bold font-outfit uppercase tracking-wider">
-            Nora AI
-          </span>
-          <Sparkles size={10} className="absolute -top-1 -right-1 text-purple-400 animate-bounce" />
+          <Sparkles size={14} className="text-cyan-400 animate-pulse" />
+          <span className="hidden sm:inline">Ask Nora AI</span>
         </button>
 
-        {/* Notifications */}
-        <button className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition relative cursor-pointer">
-          <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-md shadow-cyan-400/50" />
-        </button>
-
-        {/* Vertical divider */}
-        <div className="h-6 w-[1px] bg-white/10 hidden sm:block" />
-
-        {/* Profile Card Summary */}
-        <div className="flex items-center gap-3">
-          <div className="text-right hidden sm:block">
-            <h4 className="text-sm font-bold text-white leading-none font-outfit">
-              {user.name}
-            </h4>
-            <span className="text-[10px] text-gray-400 font-semibold mt-1 block">
-              {user.sub}
-            </span>
-          </div>
-
-          <div
-            onClick={() => {
-              if (location.pathname.startsWith("/employee")) {
-                navigate("/employee/profile");
-              }
-            }}
-            className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-black text-sm uppercase cursor-pointer select-none overflow-hidden border ${
-              location.pathname.startsWith("/employee")
-                ? "border-cyan-400 hover:scale-105 transition"
-                : "border-white/10"
-            }`}
+        {/* Notifications Popover Trigger */}
+        <div className="relative">
+          <button
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="p-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition relative cursor-pointer"
           >
-            {user.avatar ? (
-              <img
-                src={user.avatar}
-                alt={user.name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full bg-cyan-400 flex items-center justify-center font-black">
-                {user.initials}
-              </div>
+            <Bell size={16} />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-indigo-600" />
+          </button>
+
+          {/* Notifications Drawer Popover */}
+          <AnimatePresence>
+            {showNotifications && (
+              <motion.div
+                initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                className="absolute right-0 mt-3 w-80 rounded-3xl bg-white border border-slate-200 p-5 shadow-2xl backdrop-blur-2xl z-50 space-y-4 text-slate-900"
+              >
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h4 className="text-xs font-bold font-outfit uppercase tracking-wider text-slate-900">System Telemetry</h4>
+                  <button onClick={() => setShowNotifications(false)} className="text-slate-400 hover:text-slate-900">
+                    <X size={14} />
+                  </button>
+                </div>
+                <div className="space-y-3 text-xs">
+                  <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div className="flex justify-between font-bold text-slate-900">
+                      <span>Nora Ledger Auto-Sync</span>
+                      <span className="text-[9px] text-slate-400 font-mono">2m ago</span>
+                    </div>
+                    <p className="text-slate-500 text-[11px]">Reconciled 14 invoices into general accounts ledger.</p>
+                  </div>
+                  <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div className="flex justify-between font-bold text-slate-900">
+                      <span>Stock Reorder Compiled</span>
+                      <span className="text-[9px] text-slate-400 font-mono">15m ago</span>
+                    </div>
+                    <p className="text-slate-500 text-[11px]">Purchase Request issued for MacBook Pro SKUs.</p>
+                  </div>
+                </div>
+              </motion.div>
             )}
+          </AnimatePresence>
+        </div>
+
+        {/* User Profile Pill */}
+        <div className="flex items-center gap-3 pl-2 border-l border-slate-200">
+          {employee?.profilePhoto ? (
+            <img src={employee.profilePhoto} alt={employee?.name} className="w-8 h-8 rounded-full object-cover shadow-sm" />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-[#0F172A] flex items-center justify-center font-bold text-white text-xs shadow-sm">
+              {employee?.name ? employee.name[0].toUpperCase() : "U"}
+            </div>
+          )}
+          <div className="hidden lg:block text-left">
+            <h5 className="text-xs font-bold text-slate-900 font-outfit leading-none">
+              {employee?.name || "Workspace Admin"}
+            </h5>
+            <span className="text-[10px] text-slate-400 font-mono uppercase">
+              {employee?.designation || employee?.role || "Authorized"}
+            </span>
           </div>
         </div>
       </div>

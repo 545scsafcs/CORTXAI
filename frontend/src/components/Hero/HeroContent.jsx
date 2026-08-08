@@ -1,45 +1,66 @@
+import React from "react";
 import HeroButtons from "./HeroButtons";
 import HeroStats from "./HeroStats";
+import { motion } from "framer-motion";
 
 export default function HeroContent() {
   return (
-    <div className="relative z-10 w-[45%]">
+    <div className="relative z-10 w-full pr-0 lg:pr-8">
+      
+      {/* Small badge */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-black/5 bg-slate-50 shadow-sm"
+      >
+        <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+        <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+          Continuous Cognitive Control
+        </span>
+      </motion.div>
 
-      <span className="text-cyan-400 font-semibold">
-        AI Business Command Center
-      </span>
+      {/* Main Headline */}
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.1 }}
+        className="mt-6 text-5xl md:text-7xl font-black font-outfit text-slate-900 tracking-tight leading-[1.05]"
+      >
+        The AI Business
+        <br />
+        <span className="text-nora-gradient bg-clip-text">
+          Operating System.
+        </span>
+      </motion.h1>
 
-      <h1 className="mt-8 text-7xl font-black leading-[1.05]">
+      {/* Description */}
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="mt-8 text-lg md:text-xl text-slate-500 leading-relaxed max-w-xl font-sans"
+      >
+        CORTXAI consolidates HR, CRM, Inventory, Finance, Sales and autonomous AI Agents into a unified, continuous database powered by Nora. Eliminate the fragmentation tax of disconnected software tools.
+      </motion.p>
 
-<span className="text-white">
-AI Powered
-</span>
+      {/* Actions */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
+        <HeroButtons />
+      </motion.div>
 
-<br/>
-
-<span className="bg-gradient-to-r
-from-cyan-300
-to-blue-500
-bg-clip-text
-text-transparent">
-
-Business OS
-
-</span>
-
-</h1>
-
-     <p className="mt-8 text-xl leading-9 text-slate-300 max-w-xl">
-
-Run HR, CRM, Inventory, Finance,
-Sales and AI Agents from a single
-intelligent operating system powered
-by Nora.
-
-</p>
-      <HeroButtons />
-
-      <HeroStats />
+      {/* Statistics */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <HeroStats />
+      </motion.div>
 
     </div>
   );

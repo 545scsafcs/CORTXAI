@@ -7,35 +7,34 @@ export default function RevenueChart() {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-xl relative overflow-hidden group">
+    <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/40 relative overflow-hidden font-sans">
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-2xl font-bold text-white font-outfit">
-            Revenue Overview
+          <h2 className="text-xl font-bold text-slate-900 font-outfit">
+            Weekly Revenue Overview
           </h2>
-          <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1.5 font-outfit">
-            Last 7 Days Trend
+          <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1 font-outfit">
+            Last 7 Days Telemetry
           </p>
         </div>
-        <div className="p-2.5 bg-cyan-500/10 rounded-xl border border-cyan-500/10 text-cyan-400">
+        <div className="p-2.5 bg-indigo-50 rounded-xl border border-slate-200 text-indigo-600">
           <TrendingUp size={20} />
         </div>
       </div>
 
-      <div className="flex items-end justify-between h-56 mt-10 px-2">
+      <div className="flex items-end justify-between h-52 mt-8 px-2">
         {bars.map((bar, index) => (
           <div key={index} className="flex flex-col items-center flex-1 group/bar">
-            {/* Value Tooltip Hover Indicator */}
-            <span className="opacity-0 group-hover/bar:opacity-100 transition-opacity duration-300 text-[10px] font-bold text-cyan-300 bg-slate-900 border border-white/10 px-2 py-0.5 rounded-md mb-2 font-mono">
+            <span className="opacity-0 group-hover/bar:opacity-100 transition-opacity duration-200 text-[10px] font-bold text-slate-900 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md mb-2 font-mono shadow-sm">
               ₹{(bar * 3000).toLocaleString()}
             </span>
             <motion.div
               initial={{ height: 0 }}
               animate={{ height: `${bar / 1.5}%` }}
               transition={{ duration: 0.8, delay: index * 0.05, ease: "easeOut" }}
-              className="w-10 rounded-xl bg-gradient-to-t from-cyan-500 via-cyan-400 to-purple-500 hover:brightness-110 shadow-lg shadow-cyan-500/10 transition-all duration-300"
+              className="w-9 rounded-xl bg-slate-900 hover:bg-indigo-600 transition-colors duration-200 shadow-sm"
             />
-            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-3 font-mono">
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-3 font-mono">
               {days[index]}
             </span>
           </div>

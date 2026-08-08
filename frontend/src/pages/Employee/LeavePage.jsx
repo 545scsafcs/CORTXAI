@@ -141,19 +141,19 @@ export default function LeavePage() {
 
     <EmployeeLayout>
 
-      <div className="space-y-8">
+      <div className="space-y-8 text-slate-900 font-sans">
 
         <div className="flex justify-between items-center">
 
           <div>
 
-            <h1 className="text-5xl font-black">
+            <h1 className="text-5xl font-black text-slate-900 font-outfit">
 
               Leave Management
 
             </h1>
 
-            <p className="text-gray-400 mt-2">
+            <p className="text-slate-650 mt-2 font-medium">
 
               Apply and Track Your Leave
 
@@ -173,7 +173,7 @@ export default function LeavePage() {
 
             }
 
-            className="bg-cyan-400 text-black px-6 py-3 rounded-xl font-bold"
+            className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold transition shadow-sm text-sm cursor-pointer"
 
           >
 
@@ -182,13 +182,14 @@ export default function LeavePage() {
           </button>
 
         </div>
-                {showForm && (
+
+        {showForm && (
 
           <form
 
             onSubmit={submitLeave}
 
-            className="rounded-3xl bg-white/5 border border-white/10 p-8 space-y-6"
+            className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8 space-y-6"
 
           >
 
@@ -196,7 +197,7 @@ export default function LeavePage() {
 
               <div>
 
-                <label className="block mb-2">
+                <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">
 
                   Leave Type
 
@@ -218,7 +219,7 @@ export default function LeavePage() {
 
                   }
 
-                  className="w-full rounded-xl bg-slate-900 border border-white/10 p-4"
+                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
 
                 >
 
@@ -258,7 +259,7 @@ export default function LeavePage() {
 
               <div>
 
-                <label className="block mb-2">
+                <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">
 
                   Total Days
 
@@ -284,7 +285,7 @@ export default function LeavePage() {
 
                   }
 
-                  className="w-full rounded-xl bg-slate-900 border border-white/10 p-4"
+                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
 
                 />
 
@@ -292,7 +293,7 @@ export default function LeavePage() {
 
               <div>
 
-                <label className="block mb-2">
+                <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">
 
                   From Date
 
@@ -316,7 +317,7 @@ export default function LeavePage() {
 
                   }
 
-                  className="w-full rounded-xl bg-slate-900 border border-white/10 p-4"
+                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
 
                 />
 
@@ -324,7 +325,7 @@ export default function LeavePage() {
 
               <div>
 
-                <label className="block mb-2">
+                <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">
 
                   To Date
 
@@ -348,7 +349,7 @@ export default function LeavePage() {
 
                   }
 
-                  className="w-full rounded-xl bg-slate-900 border border-white/10 p-4"
+                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
 
                 />
 
@@ -358,7 +359,7 @@ export default function LeavePage() {
 
             <div>
 
-              <label className="block mb-2">
+              <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">
 
                 Reason
 
@@ -382,7 +383,7 @@ export default function LeavePage() {
 
                 }
 
-                className="w-full rounded-xl bg-slate-900 border border-white/10 p-4"
+                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition resize-none"
 
               />
 
@@ -392,7 +393,7 @@ export default function LeavePage() {
 
               type="submit"
 
-              className="bg-cyan-400 text-black px-8 py-3 rounded-xl font-bold"
+              className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3.5 rounded-xl font-bold transition shadow-sm text-sm cursor-pointer"
 
             >
 
@@ -404,9 +405,9 @@ export default function LeavePage() {
 
         )}
 
-        <div className="rounded-3xl bg-white/5 border border-white/10 p-8">
+        <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
 
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-2xl font-bold text-slate-900 font-outfit">
 
             Leave History
 
@@ -415,41 +416,42 @@ export default function LeavePage() {
           <div className="overflow-x-auto mt-8">
 
             <table className="w-full">
-                          <thead>
 
-                <tr className="border-b border-white/10">
+              <thead>
 
-                  <th className="text-left py-4">
+                <tr className="border-b border-slate-200">
+
+                  <th className="text-left py-4 text-slate-900 font-black uppercase text-[11px] tracking-wider">
 
                     Type
 
                   </th>
 
-                  <th className="text-left py-4">
+                  <th className="text-left py-4 text-slate-900 font-black uppercase text-[11px] tracking-wider">
 
                     From
 
                   </th>
 
-                  <th className="text-left py-4">
+                  <th className="text-left py-4 text-slate-900 font-black uppercase text-[11px] tracking-wider">
 
                     To
 
                   </th>
 
-                  <th className="text-left py-4">
+                  <th className="text-left py-4 text-slate-900 font-black uppercase text-[11px] tracking-wider">
 
                     Days
 
                   </th>
 
-                  <th className="text-left py-4">
+                  <th className="text-left py-4 text-slate-900 font-black uppercase text-[11px] tracking-wider">
 
                     Reason
 
                   </th>
 
-                  <th className="text-left py-4">
+                  <th className="text-left py-4 text-slate-900 font-black uppercase text-[11px] tracking-wider">
 
                     Status
 
@@ -459,7 +461,7 @@ export default function LeavePage() {
 
               </thead>
 
-              <tbody>
+              <tbody className="text-xs font-semibold text-slate-900">
 
                 {
 
@@ -475,7 +477,7 @@ export default function LeavePage() {
 
                         colSpan={6}
 
-                        className="py-8 text-center text-gray-400"
+                        className="py-8 text-center text-slate-450"
 
                       >
 
@@ -501,7 +503,7 @@ export default function LeavePage() {
 
                         colSpan={6}
 
-                        className="py-8 text-center text-gray-400"
+                        className="py-8 text-center text-slate-450"
 
                       >
 
@@ -523,17 +525,17 @@ export default function LeavePage() {
 
                         key={leave._id}
 
-                        className="border-b border-white/10"
+                        className="border-b border-slate-100"
 
                       >
 
-                        <td className="py-4">
+                        <td className="py-4 font-bold text-slate-900">
 
                           {leave.leaveType}
 
                         </td>
 
-                        <td className="py-4">
+                        <td className="py-4 text-slate-700">
 
                           {
 
@@ -547,7 +549,7 @@ export default function LeavePage() {
 
                         </td>
 
-                        <td className="py-4">
+                        <td className="py-4 text-slate-700">
 
                           {
 
@@ -561,13 +563,13 @@ export default function LeavePage() {
 
                         </td>
 
-                        <td className="py-4">
+                        <td className="py-4 font-mono text-slate-900">
 
                           {leave.totalDays}
 
                         </td>
 
-                        <td className="py-4">
+                        <td className="py-4 text-slate-700 max-w-xs truncate">
 
                           {leave.reason}
 
@@ -579,15 +581,19 @@ export default function LeavePage() {
 
                             className={`
 
-                              px-4
+                              px-3
 
-                              py-2
+                              py-1.5
 
                               rounded-full
 
-                              text-sm
+                              text-[10px]
 
-                              font-semibold
+                              font-extrabold
+
+                              uppercase
+
+                              tracking-wider
 
                               ${
 
@@ -595,7 +601,7 @@ export default function LeavePage() {
 
                                 ?
 
-                                "bg-green-600"
+                                "bg-emerald-100 text-emerald-800 border border-emerald-250"
 
                                 :
 
@@ -603,11 +609,11 @@ export default function LeavePage() {
 
                                 ?
 
-                                "bg-red-600"
+                                "bg-rose-100 text-rose-800 border border-rose-250"
 
                                 :
 
-                                "bg-yellow-500 text-black"
+                                "bg-amber-100 text-amber-800 border border-amber-250"
 
                               }
 

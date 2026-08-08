@@ -12,7 +12,20 @@ export default {
         background: "#050816",
         surface: "#0E1529",
         glass: "rgba(255,255,255,0.08)",
-        border: "rgba(255,255,255,0.12)"
+        border: "rgba(255,255,255,0.12)",
+        // Custom gray palette for light theme contrast
+        gray: {
+          50: "#F8F9FA",      // light background
+          100: "#E2E8F0",     // very light
+          200: "#CBD5E1",     // light gray
+          300: "#94A3B8",     // muted text
+          400: "#64748B",     // descriptions / muted
+          500: "#475569",     // labels
+          600: "#334155",     // normal text
+          700: "#1E293B",     // secondary heading
+          800: "#0F172A",     // main heading
+          900: "#0F172A",     // darkest
+        },
       },
 
       fontFamily: {

@@ -135,563 +135,178 @@ export default function LeavePage() {
 }
 
   return (
-
     <HRLayout>
-
-      <div className="space-y-8">
-
-        <div className="flex items-center justify-between">
-
+      <div className="space-y-8 font-sans">
+        {/* Title Header */}
+        <div className="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-600" />
           <div>
-
-            <h1 className="text-5xl font-black">
-
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 font-outfit tracking-tight">
               Leave Management
-
             </h1>
-
-            <p className="mt-2 text-gray-400">
-
-              Manage Employee Leave Requests
-
+            <p className="mt-1.5 text-slate-600 text-xs sm:text-sm font-semibold leading-relaxed font-sans">
+              Review and manage employee leave requests across departments.
             </p>
-
           </div>
 
-          <div className="rounded-2xl bg-cyan-500/20 px-6 py-3">
-
-            <h2 className="text-xl font-bold">
-
-              Pending :
-
-              {
-
-                leaves.filter(
-
-                  (l)=>
-
-                  l.status==="Pending"
-
-                ).length
-
-              }
-
-            </h2>
-
+          <div className="rounded-2xl bg-amber-50 border border-amber-200/80 px-5 py-2.5 self-start sm:self-auto shadow-2xs">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-900">
+              Pending: <span className="font-mono text-sm font-black">{leaves.filter((l) => l.status === "Pending").length}</span>
+            </span>
           </div>
-
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-
-          <div className="overflow-x-auto">
-
-            <table className="w-full">
-
+        <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200">
+            <table className="w-full text-left border-collapse">
               <thead>
-
-                <tr className="border-b border-white/10">
-
-                  <th className="py-4 text-left">
-
-                    Employee
-
-                  </th>
-
-                  <th className="py-4 text-left">
-
-                    Department
-
-                  </th>
-
-                  <th className="py-4 text-left">
-
-                    Leave
-
-                  </th>
-
-                  <th className="py-4 text-left">
-
-                    From
-
-                  </th>
-
-                  <th className="py-4 text-left">
-
-                    To
-
-                  </th>
-
-                  <th className="py-4 text-left">
-
-                    Days
-
-                  </th>
-
-                  <th className="py-4 text-left">
-
-                    Status
-
-                  </th>
-
-                  <th className="py-4 text-center">
-
-                    Action
-
-                  </th>
-
+                <tr className="bg-slate-100/90 text-slate-900 text-[11px] font-black uppercase tracking-wider border-b border-slate-200">
+                  <th className="p-4 font-outfit">Employee</th>
+                  <th className="p-4 font-outfit">Department</th>
+                  <th className="p-4 font-outfit">Leave Type</th>
+                  <th className="p-4 font-outfit">From</th>
+                  <th className="p-4 font-outfit">To</th>
+                  <th className="p-4 font-outfit">Days</th>
+                  <th className="p-4 font-outfit">Status</th>
+                  <th className="p-4 font-outfit text-center">Action</th>
                 </tr>
-
               </thead>
-
-              <tbody>
-
-                {
-
-                  loading
-
-                  ?
-
-                  (
-
-                    <tr>
-
-                      <td
-
-                        colSpan={8}
-
-                        className="py-10 text-center"
-
-                      >
-
-                        Loading...
-
-                      </td>
-
-                    </tr>
-
-                  )
-
-                  :
-
-                  leaves.length===0
-
-                  ?
-
-                  (
-
-                    <tr>
-
-                      <td
-
-                        colSpan={8}
-
-                        className="py-10 text-center"
-
-                      >
-
-                        No Leave Requests
-
-                      </td>
-
-                    </tr>
-
-                  )
-
-                  :
-
-                  leaves.map((leave)=>(
-
-                   
+              <tbody className="divide-y divide-slate-100 text-xs text-slate-700 font-medium">
+                {loading ? (
+                  <tr>
+                    <td colSpan={8} className="py-16 text-center text-slate-500">
+                      <div className="inline-flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+                        <span className="font-semibold">Loading leave requests...</span>
+                      </div>
+                    </td>
+                  </tr>
+                ) : leaves.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="py-16 text-center text-slate-500 font-bold font-outfit">
+                      No Leave Requests Found
+                    </td>
+                  </tr>
+                ) : (
+                  leaves.map((leave) => (
                     <React.Fragment key={leave._id}>
-                    <tr
-  className="border-b border-white/10 hover:bg-white/5 transition"
->
-
-                      <td className="py-5">
-
-                        <div className="font-semibold">
-
+                      <tr className="hover:bg-slate-50/80 transition-colors duration-150">
+                        <td className="p-4 font-bold text-slate-900 font-outfit">
                           {leave.employeeName}
-
-                        </div>
-
-                      </td>
-
-                      <td className="py-5">
-
-                        {leave.department}
-
-                      </td>
-
-                      <td className="py-5">
-
-                        {leave.leaveType}
-
-                      </td>
-
-                      <td className="py-5">
-
-                        {
-
-                          new Date(
-
-                            leave.fromDate
-
-                          ).toLocaleDateString()
-
-                        }
-
-                      </td>
-
-                      <td className="py-5">
-
-                        {
-
-                          new Date(
-
-                            leave.toDate
-
-                          ).toLocaleDateString()
-
-                        }
-
-                      </td>
-
-                      <td className="py-5">
-
-                        {leave.totalDays}
-
-                      </td>
-
-                      <td className="py-5">
-
-                        <span
-
-                          className={`
-
-                            px-3
-
-                            py-2
-
-                            rounded-full
-
-                            text-sm
-
-                            font-semibold
-
-                            ${
-
-                              leave.status==="Approved"
-
-                              ?
-
-                              "bg-green-600"
-
-                              :
-
-                              leave.status==="Rejected"
-
-                              ?
-
-                              "bg-red-600"
-
-                              :
-
-                              "bg-yellow-500 text-black"
-
-                            }
-
-                          `}
-
-                        >
-
-                          {leave.status}
-
-                        </span>
-
-                      </td>
-
-                      <td className="py-5">
-
-                        <div className="flex items-center gap-2">
-
-
-                          {
-
-                            leave.status==="Pending"
-
-                            &&
-
-                              <>
-
-                              <button
-
-                                onClick={()=>
-
-                                  handleApprove(
-
-                                    leave._id
-
-                                  )
-
-                                }
-
-                                className="rounded-lg bg-green-600 p-2 hover:bg-green-700"
-
-                              >
-
-                                <Check size={18}/>
-
-                              </button>
-
-                              <button
-
-                                onClick={()=>
-
-                                  handleReject(
-
-                                    leave._id
-
-                                  )
-
-                                }
-
-                                className="rounded-lg bg-red-600 p-2 hover:bg-red-700"
-
-                              >
-
-                                <X size={18}/>
-
-                              </button>
-
-                              </>
-
-                          }
-
-                          <button
-
-                            onClick={()=>
-
-                              setExpanded(
-
-                                expanded===leave._id
-
-                                ?
-
-                                null
-
-                                :
-
-                                leave._id
-
-                              )
-
-                            }
-
-                            className="rounded-lg bg-cyan-500 p-2 text-black"
-
-                          >
-
-                            {
-
-                              expanded===leave._id
-
-                              ?
-
-                              <ChevronUp size={18}/>
-
-                              :
-
-                              <ChevronDown size={18}/>
-
-                            }
-
-                          </button>
-
-                        </div>
-
-                      </td>
-
-                    </tr>
-                  
-
-                    {
-
-                      expanded===leave._id
-
-                      &&
-
-                      <tr>
-
-                        <td
-
-                          colSpan={8}
-
-                          className="bg-[#0f172a] p-6"
-
-                        >
-
-                          <div className="grid gap-6 md:grid-cols-2">
-                                                      <div className="space-y-4">
-
-                              <div className="flex items-center gap-3">
-
-                                <User
-                                  size={18}
-                                  className="text-cyan-400"
-                                />
-
-                                <div>
-
-                                  <p className="text-sm text-gray-400">
-
-                                    Employee
-
-                                  </p>
-
-                                  <h3 className="font-semibold">
-
-                                    {leave.employeeName}
-
-                                  </h3>
-
-                                </div>
-
-                              </div>
-
-                              <div className="flex items-center gap-3">
-
-                                <Calendar
-                                  size={18}
-                                  className="text-cyan-400"
-                                />
-
-                                <div>
-
-                                  <p className="text-sm text-gray-400">
-
-                                    Applied On
-
-                                  </p>
-
-                                  <h3>
-
-                                    {
-
-                                      leave.createdAt
-
-                                      ?
-
-                                      new Date(
-
-                                        leave.createdAt
-
-                                      ).toLocaleString()
-
-                                      :
-
-                                      "-"
-
-                                    }
-
-                                  </h3>
-
-                                </div>
-
-                              </div>
-
-                            </div>
-
-                            <div className="space-y-4">
-
-                              <div className="flex items-start gap-3">
-
-                                <FileText
-                                  size={18}
-                                  className="mt-1 text-cyan-400"
-                                />
-
-                                <div>
-
-                                  <p className="text-sm text-gray-400">
-
-                                    Reason
-
-                                  </p>
-
-                                  <p className="mt-1 whitespace-pre-wrap">
-
-                                    {
-
-                                      leave.reason ||
-
-                                      "No reason provided"
-
-                                    }
-
-                                  </p>
-
-                                </div>
-
-                              </div>
-
-                              {
-
-                                leave.rejectionReason
-
-                                &&
-
-                                <div>
-
-                                  <p className="text-sm text-red-400">
-
-                                    Rejection Reason
-
-                                  </p>
-
-                                  <p className="mt-1">
-
-                                    {
-
-                                      leave.rejectionReason
-
-                                    }
-
-                                  </p>
-
-                                </div>
-
-                              }
-
-                            </div>
-
-                          </div>
-
                         </td>
-
+                        <td className="p-4">{leave.department}</td>
+                        <td className="p-4">{leave.leaveType}</td>
+                        <td className="p-4 font-mono text-slate-600">
+                          {new Date(leave.fromDate).toLocaleDateString()}
+                        </td>
+                        <td className="p-4 font-mono text-slate-600">
+                          {new Date(leave.toDate).toLocaleDateString()}
+                        </td>
+                        <td className="p-4 font-mono font-bold text-slate-900">{leave.totalDays}d</td>
+                        <td className="p-4">
+                          <span
+                            className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
+                              leave.status === "Approved"
+                                ? "bg-emerald-50 text-emerald-800 border border-emerald-200/90"
+                                : leave.status === "Rejected"
+                                ? "bg-rose-50 text-rose-800 border border-rose-200/90"
+                                : "bg-amber-50 text-amber-900 border border-amber-200/90"
+                            }`}
+                          >
+                            {leave.status}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          <div className="flex items-center justify-center gap-2">
+                            {leave.status === "Pending" && (
+                              <>
+                                <button
+                                  onClick={() => handleApprove(leave._id)}
+                                  className="w-8 h-8 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center transition cursor-pointer"
+                                  title="Approve Leave"
+                                >
+                                  <Check size={14} />
+                                </button>
+                                <button
+                                  onClick={() => handleReject(leave._id)}
+                                  className="w-8 h-8 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 flex items-center justify-center transition cursor-pointer"
+                                  title="Reject Leave"
+                                >
+                                  <X size={14} />
+                                </button>
+                              </>
+                            )}
+                            <button
+                              onClick={() => setExpanded(expanded === leave._id ? null : leave._id)}
+                              className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 flex items-center justify-center transition cursor-pointer"
+                              title="Toggle Details"
+                            >
+                              {expanded === leave._id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                            </button>
+                          </div>
+                        </td>
                       </tr>
 
-                    }
+                      {expanded === leave._id && (
+                        <tr>
+                          <td colSpan={8} className="bg-slate-50 p-6 border-b border-slate-200">
+                            <div className="grid gap-6 md:grid-cols-2 text-xs">
+                              <div className="space-y-3">
+                                <div className="flex items-center gap-3">
+                                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-indigo-700">
+                                    <User size={15} />
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] uppercase font-bold text-slate-500">Employee Name</p>
+                                    <h3 className="font-bold text-slate-900">{leave.employeeName}</h3>
+                                  </div>
+                                </div>
 
-                  </React.Fragment>
+                                <div className="flex items-center gap-3">
+                                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-indigo-700">
+                                    <Calendar size={15} />
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] uppercase font-bold text-slate-500">Applied On</p>
+                                    <h3 className="font-mono text-slate-900 font-bold">
+                                      {leave.createdAt ? new Date(leave.createdAt).toLocaleString() : "-"}
+                                    </h3>
+                                  </div>
+                                </div>
+                              </div>
 
-                ))
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-3">
+                                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-indigo-700 mt-0.5">
+                                    <FileText size={15} />
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] uppercase font-bold text-slate-500">Reason</p>
+                                    <p className="mt-1 whitespace-pre-wrap font-medium text-slate-800 leading-relaxed">
+                                      {leave.reason || "No reason provided"}
+                                    </p>
+                                  </div>
+                                </div>
 
-              }
-
-            </tbody>
-
-          </table>
-
+                                {leave.rejectionReason && (
+                                  <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl">
+                                    <p className="text-[10px] uppercase font-extrabold text-rose-800">Rejection Reason</p>
+                                    <p className="mt-0.5 font-medium text-rose-900">{leave.rejectionReason}</p>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-
       </div>
-
-    </div>
-
-  </HRLayout>
-
-);
-
+    </HRLayout>
+  );
 }

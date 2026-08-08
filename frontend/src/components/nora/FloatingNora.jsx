@@ -1,40 +1,57 @@
-import { Bot, X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Bot, X, Sparkles } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNora } from "../../context/NoraContext";
 import NoraPanel from "./NoraPanel";
 import { startWakeWord } from "../../services/wakeWord";
 
+import { stopSpeech } from "../../services/speak";
+
 export default function FloatingNora() {
   const { open, setOpen } = useNora();
   const location = useLocation();
   const drawerRef = useRef(null);
 
-  // Close when path/page changes
+  // Stop speech when panel closes or on navigation
   useEffect(() => {
+    if (!open) {
+      stopSpeech();
+    }
+  }, [open]);
+
+  useEffect(() => {
+    stopSpeech();
     setOpen(false);
   }, [location, setOpen]);
 
-  // Click outside listener
+  // Click outside to close helper
   useEffect(() => {
     function handleClickOutside(event) {
-      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
-        // Check if user clicked the floating trigger button
-        const trigger = document.getElementById("nora-trigger");
-        if (trigger && trigger.contains(event.target)) return;
-        setOpen(false);
+      if (!event.target || !document.body.contains(event.target)) {
+        return;
       }
+      if (drawerRef.current && drawerRef.current.contains(event.target)) {
+        return;
+      }
+      const trigger = document.getElementById("nora-trigger");
+      if (trigger && trigger.contains(event.target)) {
+        return;
+      }
+      setOpen(false);
     }
+
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("pointerdown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("pointerdown", handleClickOutside);
     };
   }, [open, setOpen]);
 
-  // Listen for Escape key
+  // Escape key to close helper
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === "Escape") {
@@ -49,100 +66,107 @@ export default function FloatingNora() {
     };
   }, [open, setOpen]);
 
-  // Wake Word listener initialization
+  // Initialize voice wake word listener
   useEffect(() => {
     async function initVoice() {
       try {
-        await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
-
-        startWakeWord(() => {
-          console.log("Wake Word Detected");
-          setOpen(true);
-          window.dispatchEvent(new Event("wake-nora"));
-        });
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          await navigator.mediaDevices.getUserMedia({ audio: true });
+          startWakeWord(() => {
+            setOpen(true);
+          });
+        }
       } catch (err) {
-        console.log("Microphone Permission Denied or Not Available", err);
+        // Voice permissions handled gracefully
       }
     }
     initVoice();
   }, [setOpen]);
 
+  const userRole = localStorage.getItem("userRole");
+
+  // Enforce Landing Page Rule: hide Nora entirely on public marketing page
+  if (location.pathname === "/" || !userRole) {
+    return null;
+  }
+
   return (
     <>
-      {/* Floating Trigger Button */}
+      {/* Floating Ask Nora Trigger Button — CortxAI Branded */}
       <AnimatePresence>
         {!open && (
           <motion.button
             id="nora-trigger"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            whileHover={{ scale: 1.04, boxShadow: "0 8px 32px rgba(6, 182, 212, 0.18)" }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => setOpen(true)}
-            className="fixed bottom-8 right-8 z-[9999] w-16 h-16 rounded-full bg-cyan-400 text-black flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.4)] transition-shadow hover:shadow-[0_0_50px_rgba(34,211,238,0.6)] cursor-pointer"
+            className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-[#0F172A] text-white shadow-lg hover:shadow-xl border border-slate-700/50 transition-all duration-300 cursor-pointer group font-sans font-bold text-xs tracking-wide"
           >
-            <Bot size={28} />
+            <div className="relative w-5 h-5 rounded-full bg-gradient-to-tr from-cyan-400 to-teal-500 flex items-center justify-center shadow-sm">
+              <Sparkles size={11} className="text-white" />
+              <span className="absolute inset-0 rounded-full bg-cyan-400/25 animate-ping" />
+            </div>
+            <span className="group-hover:text-cyan-300 transition">
+              Ask Nora AI
+            </span>
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Drawer Overlay & Panel */}
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* Blur Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+      {/* Slide-over Panel (Permanently mounted for instant 0ms WebGL rendering) */}
+      <div
+        className={`fixed inset-0 z-50 flex justify-end items-stretch p-3 font-sans transition-all duration-300 ${
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0 invisible"
+        }`}
+      >
+        {/* Soft Backdrop */}
+        <div
+          className={`fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300 ${
+            open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
+          onClick={() => setOpen(false)}
+        />
+
+        {/* Light Mode SaaS Panel — CortxAI Design System */}
+        <div
+          ref={drawerRef}
+          onMouseDown={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+          className={`relative w-full max-w-[420px] h-full bg-white border border-slate-200 rounded-2xl shadow-2xl z-10 flex flex-col pointer-events-auto overflow-hidden transition-all duration-300 ease-out ${
+            open ? "translate-x-0 scale-100" : "translate-x-full scale-95"
+          }`}
+        >
+          {/* Panel Header — Light Mode */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 shrink-0 bg-slate-50/80">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-xl bg-[#0F172A] flex items-center justify-center text-cyan-400 shadow-sm">
+                <Bot size={14} />
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-slate-800 font-outfit leading-none tracking-wide uppercase">Nora Operating Layer</h3>
+                <span className="text-[9px] text-teal-600 font-mono tracking-widest uppercase font-semibold">system_online</span>
+              </div>
+            </div>
+
+            {/* Close Panel */}
+            <button
               onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998]"
-            />
-
-            {/* Glass Drawer Panel */}
-            <motion.div
-              ref={drawerRef}
-              initial={{ x: "100%", opacity: 0.5 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0.5 }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-4 right-4 bottom-4 z-[9999] w-[500px] max-w-[calc(100vw-2rem)] rounded-3xl bg-slate-950/70 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl flex flex-col overflow-hidden"
+              className="p-1.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition cursor-pointer"
             >
-              {/* Header */}
-              <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-white/[0.01]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-500 flex items-center justify-center text-black shadow-lg shadow-cyan-500/10">
-                    <Bot size={20} />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-black text-white leading-none font-outfit">
-                      Nora AI
-                    </h2>
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-cyan-400 mt-1 block">
-                      Autonomous Copilot
-                    </span>
-                  </div>
-                </div>
+              <X size={14} />
+            </button>
+          </div>
 
-                <button
-                  onClick={() => setOpen(false)}
-                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-400 text-gray-400 flex items-center justify-center transition-all duration-300"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Chat Viewport Area */}
-              <div className="flex-1 overflow-hidden p-6 bg-slate-950/20">
-                <NoraPanel />
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          {/* Dynamic Panel Content Container */}
+          <div className="flex-1 min-h-0 px-3 py-2 overflow-hidden">
+            <NoraPanel isPanelOpen={open} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

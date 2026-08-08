@@ -40,25 +40,25 @@ export default function ProfilePage() {
 
   return (
     <EmployeeLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 text-slate-900">
         {/* Page Title */}
         <div>
-          <h1 className="text-5xl font-black text-white">Employee Profile</h1>
-          <p className="text-gray-400 mt-2 text-lg">
+          <h1 className="text-5xl font-black text-slate-900 font-outfit">Employee Profile</h1>
+          <p className="text-slate-600 mt-2 text-lg font-medium">
             Manage your personal information, security, and preferences.
           </p>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-2 border-b border-white/10 pb-4">
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-4">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 activeTab === tab.id
-                  ? "bg-cyan-400 text-black shadow-lg shadow-cyan-400/20"
-                  : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                  ? "bg-slate-900 text-white shadow-md"
+                  : "bg-slate-100 text-slate-600 border border-slate-200/60 hover:bg-slate-200 hover:text-slate-900"
               }`}
             >
               {tab.icon} {tab.label}
@@ -180,24 +180,24 @@ function OverviewTab({ employee, completion, refreshEmployee, setSaving, saving,
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
       {/* Left: Avatar + Identity */}
-      <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center">
+      <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8 flex flex-col items-center text-center">
         {/* Avatar */}
         <div className="relative group">
           {employee?.profilePhoto ? (
             <img
               src={employee.profilePhoto}
               alt={employee?.firstName}
-              className="w-36 h-36 rounded-full object-cover border-4 border-cyan-400/30 shadow-xl shadow-cyan-500/10"
+              className="w-36 h-36 rounded-full object-cover border-4 border-slate-100 shadow-xl shadow-slate-200/40"
             />
           ) : (
-            <div className="w-36 h-36 rounded-full bg-cyan-500 flex items-center justify-center text-7xl font-black text-black uppercase shadow-xl shadow-cyan-500/10">
+            <div className="w-36 h-36 rounded-full bg-slate-900 flex items-center justify-center text-7xl font-black text-white uppercase shadow-xl shadow-slate-250/20">
               {employee?.firstName?.charAt(0)}
             </div>
           )}
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={saving}
-            className="absolute bottom-1 right-1 p-2.5 bg-cyan-400 rounded-full text-black hover:bg-cyan-300 transition shadow-lg opacity-0 group-hover:opacity-100"
+            className="absolute bottom-1 right-1 p-2.5 bg-slate-900 rounded-full text-white hover:bg-slate-800 transition shadow-lg opacity-0 group-hover:opacity-100"
             title="Upload Photo"
           >
             <Camera size={18} />
@@ -215,23 +215,23 @@ function OverviewTab({ employee, completion, refreshEmployee, setSaving, saving,
           <button
             onClick={handleRemoveAvatar}
             disabled={saving}
-            className="mt-3 text-xs text-red-400 hover:text-red-300 flex items-center gap-1 transition"
+            className="mt-3 text-xs text-rose-600 hover:text-rose-700 flex items-center gap-1 transition font-bold"
           >
             <Trash2 size={12} /> Remove Photo
           </button>
         )}
 
-        <h2 className="text-3xl font-bold mt-6 text-white">
+        <h2 className="text-3xl font-bold mt-6 text-slate-900 font-outfit">
           {employee?.firstName} {employee?.lastName}
         </h2>
-        <p className="text-cyan-400 mt-1">{employee?.designation || "Staff"}</p>
-        <span className="mt-3 px-4 py-1.5 bg-white/10 border border-white/5 rounded-full text-xs font-mono text-gray-300">
+        <p className="text-emerald-700 font-bold mt-1">{employee?.designation || "Staff"}</p>
+        <span className="mt-3 px-4 py-1.5 bg-slate-100 border border-slate-200 rounded-full text-xs font-mono text-slate-700 font-bold">
           {employee?.employeeId}
         </span>
-        <p className="text-gray-400 text-sm mt-3">{employee?.department || "General"}</p>
+        <p className="text-slate-500 font-semibold text-sm mt-3">{employee?.department || "General"} Department</p>
 
         {employee?.bio && (
-          <p className="mt-4 text-gray-400 text-sm italic border-t border-white/5 pt-4 leading-relaxed">
+          <p className="mt-4 text-slate-650 text-sm font-medium italic border-t border-slate-100 pt-4 leading-relaxed">
             "{employee.bio}"
           </p>
         )}
@@ -240,36 +240,36 @@ function OverviewTab({ employee, completion, refreshEmployee, setSaving, saving,
       {/* Right: Completion + Activity */}
       <div className="xl:col-span-2 space-y-8">
         {/* Profile Completion */}
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <h3 className="text-2xl font-bold text-white mb-6">Profile Completion</h3>
+        <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+          <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Profile Completion</h3>
           <div className="flex items-center gap-6">
             <div className="relative w-24 h-24">
               <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
+                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,0,0,0.03)" strokeWidth="8" />
                 <circle
                   cx="50" cy="50" r="42" fill="none"
-                  stroke={completion?.percentage >= 80 ? "#22d3ee" : completion?.percentage >= 50 ? "#facc15" : "#ef4444"}
+                  stroke={completion?.percentage >= 80 ? "#059669" : completion?.percentage >= 50 ? "#d97706" : "#dc2626"}
                   strokeWidth="8" strokeLinecap="round"
                   strokeDasharray={`${(completion?.percentage || 0) * 2.64} 264`}
                 />
               </svg>
-              <span className="absolute inset-0 flex items-center justify-center text-2xl font-black text-white">
+              <span className="absolute inset-0 flex items-center justify-center text-2xl font-black text-slate-900 font-outfit">
                 {completion?.percentage || 0}%
               </span>
             </div>
-            <div className="flex-1">
-              <p className="text-gray-400 text-sm">
+            <div className="flex-1 font-sans">
+              <p className="text-slate-500 font-semibold text-sm">
                 {completion?.filled || 0} of {completion?.total || 13} fields completed
               </p>
-              <div className="w-full bg-white/10 h-2.5 rounded-full mt-3 overflow-hidden">
+              <div className="w-full bg-slate-100 h-2.5 rounded-full mt-3 overflow-hidden border border-slate-200/50">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{
                     width: `${completion?.percentage || 0}%`,
                     background: completion?.percentage >= 80
-                      ? "linear-gradient(to right, #06b6d4, #22d3ee)"
+                      ? "linear-gradient(to right, #059669, #10b981)"
                       : completion?.percentage >= 50
-                      ? "linear-gradient(to right, #eab308, #facc15)"
+                      ? "linear-gradient(to right, #d97706, #f59e0b)"
                       : "linear-gradient(to right, #dc2626, #ef4444)",
                   }}
                 />
@@ -277,12 +277,12 @@ function OverviewTab({ employee, completion, refreshEmployee, setSaving, saving,
 
               {completion?.missing?.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-sm text-gray-400 font-semibold mb-2">Complete your profile:</p>
+                  <p className="text-sm text-slate-700 font-bold mb-2">Complete your profile:</p>
                   <div className="flex flex-wrap gap-2">
                     {completion.missing.map((item) => (
                       <span
                         key={item}
-                        className="px-3 py-1 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-full text-xs"
+                        className="px-3 py-1 bg-amber-500/10 text-amber-800 border border-amber-500/20 rounded-full text-xs font-semibold"
                       >
                         {item}
                       </span>
@@ -295,9 +295,9 @@ function OverviewTab({ employee, completion, refreshEmployee, setSaving, saving,
         </div>
 
         {/* Activity Log */}
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-            <Clock className="text-cyan-400" size={22} /> Activity Log
+        <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+          <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 font-outfit">
+            <Clock className="text-slate-900" size={22} /> Activity Log
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ActivityItem label="Last Login" value={employee?.activityLog?.lastLogin} />
@@ -323,9 +323,9 @@ function ActivityItem({ label, value }) {
     : "Not recorded";
 
   return (
-    <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
-      <span className="text-gray-400 text-sm">{label}</span>
-      <span className={`text-sm font-mono ${value ? "text-white" : "text-gray-600"}`}>
+    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+      <span className="text-slate-500 font-bold text-xs font-sans">{label}</span>
+      <span className={`text-xs font-mono font-bold ${value ? "text-slate-900" : "text-slate-400"}`}>
         {formatted}
       </span>
     </div>
@@ -383,8 +383,8 @@ function PersonalInfoTab({ employee, refreshEmployee, setSaving, saving, setComp
   }
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-      <h3 className="text-2xl font-bold text-white mb-6">Personal Information</h3>
+    <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+      <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Personal Information</h3>
       <form onSubmit={handleSave} className="space-y-6">
         {/* Read-only fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -402,11 +402,11 @@ function PersonalInfoTab({ employee, refreshEmployee, setSaving, saving, setComp
           <FormField label="Email *" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} required />
           <FormField label="Phone" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} placeholder="+91 98765 43210" />
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2">Gender</label>
+            <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Gender</label>
             <select
               value={form.gender}
               onChange={(e) => setForm({ ...form, gender: e.target.value })}
-              className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+              className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -417,13 +417,13 @@ function PersonalInfoTab({ employee, refreshEmployee, setSaving, saving, setComp
           <FormField label="Blood Group" value={form.bloodGroup} onChange={(v) => setForm({ ...form, bloodGroup: v })} placeholder="e.g. O+" />
         </div>
         <div>
-          <label className="block text-gray-300 text-sm font-semibold mb-2">Bio</label>
+          <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Bio</label>
           <textarea
             rows={3}
             value={form.bio}
             onChange={(e) => setForm({ ...form, bio: e.target.value })}
             placeholder="Write a short bio about yourself..."
-            className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
+            className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition resize-none"
           />
         </div>
         <SaveButton saving={saving} />
@@ -474,17 +474,17 @@ function AddressTab({ employee, refreshEmployee, setSaving, saving, setCompletio
   }
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-      <h3 className="text-2xl font-bold text-white mb-6">Address Information</h3>
+    <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+      <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Address Information</h3>
       <form onSubmit={handleSave} className="space-y-6">
         <div>
-          <label className="block text-gray-300 text-sm font-semibold mb-2">Street Address</label>
+          <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Street Address</label>
           <textarea
             rows={2}
             value={form.address}
             onChange={(e) => setForm({ ...form, address: e.target.value })}
             placeholder="Building, Street, Locality..."
-            className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
+            className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition resize-none"
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -541,19 +541,19 @@ function EmergencyTab({ employee, refreshEmployee, setSaving, saving, setComplet
   }
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-      <h3 className="text-2xl font-bold text-white mb-6">Emergency Contact</h3>
+    <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+      <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Emergency Contact</h3>
       <form onSubmit={handleSave} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <FormField label="Contact Name" value={form.emergencyContactName} onChange={(v) => setForm({ ...form, emergencyContactName: v })} placeholder="e.g. Rajesh Sharma" />
           <FormField label="Contact Number" value={form.emergencyContactNumber} onChange={(v) => setForm({ ...form, emergencyContactNumber: v })} placeholder="+91 98765 43210" />
         </div>
         <div>
-          <label className="block text-gray-300 text-sm font-semibold mb-2">Relationship</label>
+          <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Relationship</label>
           <select
             value={form.emergencyContactRelationship}
             onChange={(e) => setForm({ ...form, emergencyContactRelationship: e.target.value })}
-            className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
           >
             <option value="">Select Relationship</option>
             <option value="Father">Father</option>
@@ -621,19 +621,19 @@ function SecurityTab({ employee, refreshEmployee }) {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
       {/* Change Password Form */}
-      <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-        <h3 className="text-2xl font-bold text-white mb-6">Change Password</h3>
+      <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+        <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Change Password</h3>
         <form onSubmit={handleChange} className="space-y-5">
           {/* Current Password */}
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2">Current Password</label>
+            <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Current Password</label>
             <div className="relative">
               <input
                 type={showCurrent ? "text" : "password"}
                 value={form.currentPassword}
                 onChange={(e) => setForm({ ...form, currentPassword: e.target.value })}
                 placeholder="Enter current password (if set)"
-                className="w-full bg-[#0B1120] border border-white/10 p-4 pr-12 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full bg-slate-50 border border-slate-200 p-4 pr-12 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
               />
               <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-4 top-4 text-gray-400 hover:text-white">
                 {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -643,16 +643,16 @@ function SecurityTab({ employee, refreshEmployee }) {
 
           {/* New Password */}
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2">New Password</label>
+            <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">New Password</label>
             <div className="relative">
               <input
                 type={showNew ? "text" : "password"}
                 value={form.newPassword}
                 onChange={(e) => setForm({ ...form, newPassword: e.target.value })}
                 placeholder="Minimum 8 characters"
-                className="w-full bg-[#0B1120] border border-white/10 p-4 pr-12 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full bg-slate-50 border border-slate-200 p-4 pr-12 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
               />
-              <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-4 top-4 text-gray-400 hover:text-white">
+              <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-4 top-4 text-slate-400 hover:text-slate-600">
                 {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
@@ -665,7 +665,7 @@ function SecurityTab({ employee, refreshEmployee }) {
                     <div
                       key={i}
                       className={`h-1.5 flex-1 rounded-full transition-all ${
-                        i <= strength.score ? strength.color : "bg-white/10"
+                        i <= strength.score ? strength.color : "bg-slate-200"
                       }`}
                     />
                   ))}
@@ -684,16 +684,16 @@ function SecurityTab({ employee, refreshEmployee }) {
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2">Confirm New Password</label>
+            <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Confirm New Password</label>
             <input
               type="password"
               value={form.confirmPassword}
               onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
               placeholder="Re-enter new password"
-              className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+              className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
             />
             {form.confirmPassword && form.newPassword !== form.confirmPassword && (
-              <p className="text-red-400 text-xs mt-2 flex items-center gap-1">
+              <p className="text-rose-600 text-xs mt-2 flex items-center gap-1 font-bold">
                 <AlertCircle size={12} /> Passwords do not match
               </p>
             )}
@@ -702,7 +702,7 @@ function SecurityTab({ employee, refreshEmployee }) {
           <button
             type="submit"
             disabled={saving}
-            className="w-full bg-cyan-400 hover:bg-cyan-300 text-black py-3.5 rounded-xl font-bold disabled:opacity-50 transition shadow-lg shadow-cyan-400/10"
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3.5 rounded-xl font-bold disabled:opacity-50 transition shadow-sm"
           >
             {saving ? "Changing..." : "Change Password"}
           </button>
@@ -710,8 +710,8 @@ function SecurityTab({ employee, refreshEmployee }) {
       </div>
 
       {/* Security Info */}
-      <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-        <h3 className="text-2xl font-bold text-white mb-6">Security Information</h3>
+      <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+        <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Security Information</h3>
         <div className="space-y-4">
           <SecurityItem label="Last Login Device" value={employee?.security?.lastLoginDevice} />
           <SecurityItem label="Last Login Browser" value={employee?.security?.lastLoginBrowser} />
@@ -748,9 +748,9 @@ function SecurityTab({ employee, refreshEmployee }) {
 
 function SecurityItem({ label, value }) {
   return (
-    <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
-      <span className="text-gray-400 text-sm">{label}</span>
-      <span className={`text-sm font-mono ${value ? "text-white" : "text-gray-600"}`}>
+    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+      <span className="text-slate-500 font-bold text-xs font-sans">{label}</span>
+      <span className={`text-xs font-mono font-bold ${value ? "text-slate-900" : "text-slate-400"}`}>
         {value || "Not recorded"}
       </span>
     </div>
@@ -759,7 +759,7 @@ function SecurityItem({ label, value }) {
 
 function RuleCheck({ passed, label }) {
   return (
-    <div className={`flex items-center gap-2 text-xs ${passed ? "text-green-400" : "text-gray-500"}`}>
+    <div className={`flex items-center gap-2 text-xs font-semibold ${passed ? "text-emerald-700" : "text-slate-400"}`}>
       {passed ? <Check size={12} /> : <ChevronRight size={12} />}
       {label}
     </div>
@@ -828,21 +828,21 @@ function PreferencesTab({ employee, refreshEmployee, setSaving, saving }) {
   }
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-      <h3 className="text-2xl font-bold text-white mb-6">Preferences</h3>
+    <div className="bg-white border border-slate-200/80 shadow-xl shadow-slate-200/40 rounded-3xl p-8">
+      <h3 className="text-2xl font-bold text-slate-900 mb-6 font-outfit">Preferences</h3>
       <div className="space-y-6">
         <ToggleSwitch label="Dark Mode" value={prefs.darkMode} onChange={(v) => setPrefs({ ...prefs, darkMode: v })} />
         <ToggleSwitch label="Email Notifications" value={prefs.emailNotifications} onChange={(v) => setPrefs({ ...prefs, emailNotifications: v })} />
         <ToggleSwitch label="SMS Notifications" value={prefs.smsNotifications} onChange={(v) => setPrefs({ ...prefs, smsNotifications: v })} />
         <ToggleSwitch label="Push Notifications" value={prefs.pushNotifications} onChange={(v) => setPrefs({ ...prefs, pushNotifications: v })} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4 border-t border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4 border-t border-slate-200">
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2">Language</label>
+            <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Language</label>
             <select
               value={prefs.language}
               onChange={(e) => setPrefs({ ...prefs, language: e.target.value })}
-              className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+              className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
             >
               <option value="English">English</option>
               <option value="Hindi">Hindi</option>
@@ -854,11 +854,11 @@ function PreferencesTab({ employee, refreshEmployee, setSaving, saving }) {
             </select>
           </div>
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2">Timezone</label>
+            <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">Timezone</label>
             <select
               value={prefs.timezone}
               onChange={(e) => setPrefs({ ...prefs, timezone: e.target.value })}
-              className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+              className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
             >
               <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
               <option value="America/New_York">America/New_York (EST)</option>
@@ -874,7 +874,7 @@ function PreferencesTab({ employee, refreshEmployee, setSaving, saving }) {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-cyan-400 hover:bg-cyan-300 text-black px-8 py-3.5 rounded-xl font-bold disabled:opacity-50 transition shadow-lg shadow-cyan-400/10"
+          className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3.5 rounded-xl font-bold disabled:opacity-50 transition shadow-sm"
         >
           {saving ? "Saving..." : "Save Preferences"}
         </button>
@@ -886,12 +886,12 @@ function PreferencesTab({ employee, refreshEmployee, setSaving, saving }) {
 function ToggleSwitch({ label, value, onChange }) {
   return (
     <div className="flex items-center justify-between py-2">
-      <span className="text-gray-300 font-semibold">{label}</span>
+      <span className="text-slate-800 font-bold text-sm">{label}</span>
       <button
         type="button"
         onClick={() => onChange(!value)}
         className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${
-          value ? "bg-cyan-400" : "bg-white/10"
+          value ? "bg-slate-900" : "bg-slate-200"
         }`}
       >
         <span
@@ -911,14 +911,14 @@ function ToggleSwitch({ label, value, onChange }) {
 function FormField({ label, type = "text", value, onChange, placeholder, required }) {
   return (
     <div>
-      <label className="block text-gray-300 text-sm font-semibold mb-2">{label}</label>
+      <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="w-full bg-[#0B1120] border border-white/10 p-4 rounded-xl text-white outline-none focus:ring-2 focus:ring-cyan-500/50"
+        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/40 focus:bg-white transition"
       />
     </div>
   );
@@ -927,8 +927,8 @@ function FormField({ label, type = "text", value, onChange, placeholder, require
 function ReadOnlyField({ label, value }) {
   return (
     <div>
-      <label className="block text-gray-300 text-sm font-semibold mb-2">{label}</label>
-      <div className="w-full bg-white/5 border border-white/5 p-4 rounded-xl text-gray-400 font-mono cursor-not-allowed">
+      <label className="block text-slate-900 font-extrabold text-xs uppercase tracking-wider mb-2">{label}</label>
+      <div className="w-full bg-slate-100 border border-slate-200/60 p-4 rounded-xl text-slate-700 font-mono font-bold cursor-not-allowed">
         {value || "--"}
       </div>
     </div>
@@ -937,11 +937,11 @@ function ReadOnlyField({ label, value }) {
 
 function SaveButton({ saving }) {
   return (
-    <div className="flex justify-end pt-4 border-t border-white/10">
+    <div className="flex justify-end pt-4 border-t border-slate-200">
       <button
         type="submit"
         disabled={saving}
-        className="bg-cyan-400 hover:bg-cyan-300 text-black px-8 py-3.5 rounded-xl font-bold disabled:opacity-50 transition shadow-lg shadow-cyan-400/10"
+        className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3.5 rounded-xl font-bold disabled:opacity-50 transition shadow-sm"
       >
         {saving ? "Saving..." : "Save Changes"}
       </button>

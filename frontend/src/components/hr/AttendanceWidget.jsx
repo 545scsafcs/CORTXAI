@@ -118,19 +118,19 @@ export default function AttendanceWidget() {
   const processedLogs = getProcessedLogs();
 
   return (
-    <div className="rounded-3xl bg-white/5 border border-white/10 p-8 space-y-6">
+    <div className="rounded-3xl bg-white border border-slate-200/80 p-8 space-y-6 shadow-sm font-sans">
       {/* Header Toolbar */}
-      <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 border-b border-white/10 pb-6">
+      <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 border-b border-slate-100 pb-6">
         <div>
-          <h3 className="text-2xl font-bold text-white">Live Attendance Log</h3>
-          <span className="mt-1.5 inline-block bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-3 py-1 rounded-full text-xs font-semibold">
+          <h3 className="text-2xl font-bold text-slate-900 font-outfit">Live Attendance Log</h3>
+          <span className="mt-1.5 inline-block bg-indigo-50 text-indigo-900 border border-indigo-200/80 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider font-mono">
             Live Sync Active
           </span>
         </div>
 
         {/* Local Search Input */}
         <div className="relative w-full md:max-w-xs">
-          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
             <Search size={16} />
           </span>
           <input
@@ -138,75 +138,75 @@ export default function AttendanceWidget() {
             placeholder="Search records..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#0B1120] border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition"
           />
         </div>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-cyan-400"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-slate-900"></div>
         </div>
       ) : processedLogs.length === 0 ? (
-        <p className="text-gray-500 text-center py-20 bg-white/5 border border-white/5 rounded-2xl">
+        <p className="text-slate-500 text-center py-20 bg-slate-50 border border-slate-200/60 rounded-2xl text-xs font-medium">
           {searchQuery ? "No matching records found." : "No attendance logs found."}
         </p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-2xl border border-slate-200/80">
           <table className="w-full text-left">
             <thead>
-              <tr className="text-gray-400 text-sm border-b border-white/10">
+              <tr className="text-slate-900 text-[11px] font-black uppercase tracking-wider bg-slate-100/90 border-b border-slate-200">
                 <th
                   onClick={() => handleSort("date")}
-                  className="pb-4 font-semibold cursor-pointer select-none hover:text-white transition"
+                  className="p-4 font-outfit cursor-pointer select-none hover:text-indigo-700 transition"
                 >
                   Date {renderSortIcon("date")}
                 </th>
                 <th
                   onClick={() => handleSort("name")}
-                  className="pb-4 font-semibold cursor-pointer select-none hover:text-white transition"
+                  className="p-4 font-outfit cursor-pointer select-none hover:text-indigo-700 transition"
                 >
                   Employee {renderSortIcon("name")}
                 </th>
                 <th
                   onClick={() => handleSort("checkIn")}
-                  className="pb-4 font-semibold cursor-pointer select-none hover:text-white transition"
+                  className="p-4 font-outfit cursor-pointer select-none hover:text-indigo-700 transition"
                 >
                   Check In {renderSortIcon("checkIn")}
                 </th>
                 <th
                   onClick={() => handleSort("checkOut")}
-                  className="pb-4 font-semibold cursor-pointer select-none hover:text-white transition"
+                  className="p-4 font-outfit cursor-pointer select-none hover:text-indigo-700 transition"
                 >
                   Check Out {renderSortIcon("checkOut")}
                 </th>
                 <th
                   onClick={() => handleSort("workingHours")}
-                  className="pb-4 font-semibold cursor-pointer select-none hover:text-white transition"
+                  className="p-4 font-outfit cursor-pointer select-none hover:text-indigo-700 transition"
                 >
                   Working Hours {renderSortIcon("workingHours")}
                 </th>
                 <th
                   onClick={() => handleSort("status")}
-                  className="pb-4 font-semibold cursor-pointer select-none hover:text-white transition text-center"
+                  className="p-4 font-outfit cursor-pointer select-none hover:text-indigo-700 transition text-center"
                 >
                   Status {renderSortIcon("status")}
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-gray-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700 text-xs font-medium">
               {processedLogs.map((log) => (
-                <tr key={log._id} className="hover:bg-white/5 transition">
-                  <td className="py-4 font-mono text-cyan-400 text-sm">
+                <tr key={log._id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="p-4 font-mono text-indigo-700 font-bold text-xs">
                     {formatDate(log.date)}
                   </td>
-                  <td className="py-4">
-                    <div className="font-bold text-white">{log.employeeName}</div>
-                    <div className="text-xs text-gray-400 mt-0.5">
+                  <td className="p-4">
+                    <div className="font-bold text-slate-900 font-outfit">{log.employeeName}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">
                       {log.employeeId} • {log.department}
                     </div>
                   </td>
-                  <td className="py-4 font-mono text-sm">
+                  <td className="p-4 font-mono text-xs text-slate-600">
                     {log.checkIn
                       ? new Date(log.checkIn).toLocaleTimeString([], {
                           hour: "2-digit",
@@ -214,7 +214,7 @@ export default function AttendanceWidget() {
                         })
                       : "--"}
                   </td>
-                  <td className="py-4 font-mono text-sm">
+                  <td className="p-4 font-mono text-xs text-slate-600">
                     {log.checkOut
                       ? new Date(log.checkOut).toLocaleTimeString([], {
                           hour: "2-digit",
@@ -222,17 +222,17 @@ export default function AttendanceWidget() {
                         })
                       : "--"}
                   </td>
-                  <td className="py-4 font-mono">
+                  <td className="p-4 font-mono text-slate-900 font-bold">
                     {log.workingHours ? `${log.workingHours.toFixed(2)}h` : "0.00h"}
                   </td>
-                  <td className="py-4 text-center">
+                  <td className="p-4 text-center">
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                      className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
                         log.attendanceStatus === "Present"
-                          ? "bg-green-500/20 text-green-400 border border-green-500/10"
+                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200/90"
                           : log.attendanceStatus === "Leave"
-                          ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/10"
-                          : "bg-red-500/20 text-red-400 border border-red-500/10"
+                          ? "bg-amber-50 text-amber-900 border border-amber-200/90"
+                          : "bg-rose-50 text-rose-800 border border-rose-200/90"
                       }`}
                     >
                       {log.attendanceStatus}

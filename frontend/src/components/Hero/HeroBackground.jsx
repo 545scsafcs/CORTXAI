@@ -2,53 +2,48 @@ import { motion } from "framer-motion";
 
 export default function HeroBackground() {
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden -z-10">
+      {/* Light Clean Canvas */}
+      <div className="absolute inset-0 bg-[#ffffff]" />
 
-      {/* Base */}
-      <div className="absolute inset-0 bg-[#050816]" />
-
-      {/* Aurora */}
+      {/* Floating Soft Cream Aurora Light */}
       <motion.div
         animate={{
-          x: [0, 120, 0],
-          y: [0, -60, 0],
+          x: [0, 40, 0],
+          y: [0, -30, 0],
         }}
         transition={{
-          duration: 18,
+          duration: 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-[-120px] left-[-150px] h-[650px] w-[650px]
-        rounded-full bg-cyan-500/20 blur-[140px]"
+        className="absolute top-[-10%] left-[-10%] h-[700px] w-[700px] rounded-full bg-[#f5f2eb]/60 blur-[130px]"
       />
 
       <motion.div
         animate={{
-          x: [0, -100, 0],
-          y: [0, 70, 0],
+          x: [0, -30, 0],
+          y: [0, 40, 0],
         }}
         transition={{
-          duration: 20,
+          duration: 15,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-[-180px] right-[-150px]
-        h-[650px] w-[650px]
-        rounded-full bg-blue-600/20 blur-[170px]"
+        className="absolute bottom-[-10%] right-[-10%] h-[700px] w-[700px] rounded-full bg-[#f4f4f5]/80 blur-[150px]"
       />
 
-      {/* Grid */}
+      {/* Subtle Mesh Grid Gridline (Editorial aesthetic) */}
       <div
-        className="absolute inset-0 opacity-[0.08]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `
-          linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,.18) 1px, transparent 1px)
+          linear-gradient(rgba(0,0,0,.15) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,0,0,.15) 1px, transparent 1px)
           `,
-          backgroundSize: "70px 70px",
+          backgroundSize: "60px 60px",
         }}
       />
-
     </div>
   );
 }

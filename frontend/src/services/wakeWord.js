@@ -36,8 +36,6 @@ export function startWakeWord(onWake) {
       transcript += event.results[i][0].transcript.toLowerCase();
     }
 
-    console.log("Wake :", transcript);
-
     if (
       transcript.includes("hey nora") ||
       transcript.includes("hi nora") ||
